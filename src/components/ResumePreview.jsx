@@ -1,27 +1,26 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-function ResumePreview({ data }) {
+const ResumePreview = forwardRef(({ data }, ref) => {
+
   return (
-    <div className="preview">
-      <h2>Превью</h2>
-      <h3>{data.name}</h3>
-      <h4>{data.title}</h4>
+    <div className="preview" ref={ref} id="resume-preview">
+      <h2>{data.name}</h2>
+      <strong>{data.title}</strong>
       <p>{data.summary}</p>
+      <strong>Skills:</strong>
       <ul>
-        {data.skills.split(",").map((skill, idx) => (
-          <li key={idx}>{skill.trim()}</li>
+        {data.skills.split(",").map((skill, i) => (
+          <li key={i}>{skill.trim()}</li>
         ))}
       </ul>
-      <h2>Опыт работы</h2>
+      <strong>Experience</strong>
       <p>{data.experience}</p>
-
-      <h2>Образование</h2>
+      <strong>Education</strong>
       <p>{data.education}</p>
-
-      <h2>Контакты</h2>
+      <strong>Contacts</strong>
       <p>{data.contacts}</p>
     </div>
   );
-}
+});
 
 export default ResumePreview;
