@@ -16,29 +16,69 @@ function App() {
 
   const previewRef = useRef();
 
+  const [pdfFormat, setPdfFormat] = useState("a4");
+
   const handleDownloadPDF = () => {
     if (!previewRef.current) {
       console.error("Preview element not found");
       return;
     }
 
+    const element = previewRef.current.cloneNode(true);
+
+    const styleLink = document.createElement("link");
+    styleLink.rel = "stylesheet";
+    styleLink.href = "/styles-pdf.css";
+    element.insertBefore(styleLink, element.firstChild);
+
     html2pdf()
-      .from(previewRef.current)
+      .from(element)
       .set({
         margin: 10,
         filename: "My_Resume.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        jsPDF: { unit: "mm", format: pdfFormat, orientation: "portrait" },
       })
       .save();
+  };
+
+  const handlePreviewPDF = () => {
+    if (!previewRef.current) return;
+
+    const win = window.open("", "_blank");
+    const html = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="/styles-pdf.css" />
+        </head>
+        <body>
+          ${previewRef.current.innerHTML}
+        </body>
+      </html>
+    `;
+    win.document.write(html);
+    win.document.close();
   };
 
   return (
     <div className="app">
       <ResumeEditor data={data} setData={setData} />
+      <select
+        onChange={(e) => setPdfFormat(e.target.value)}
+        style={{ marginBottom: "10px" }}
+      >
+        <option value="a4">A4</option>
+        <option value="a3">A3</option>
+        <option value="letter">Letter</option>
+      </select>
+
       <div>
         <ResumePreview ref={previewRef} data={data} />
+        <button onClick={handlePreviewPDF} style={{ marginBottom: "10px" }}>
+          Preview PDF
+        </button>
+
         <button onClick={handleDownloadPDF} style={{ marginTop: "10px" }}>
           Export to PDF
         </button>
