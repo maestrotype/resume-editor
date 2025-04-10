@@ -63,8 +63,22 @@ function ResumeEditor({ data, setData }) {
         value={data.contacts}
         onChange={handleChange}
       />
-
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              setData((prev) => ({ ...prev, avatar: reader.result }));
+            };
+            reader.readAsDataURL(file);
+          }
+        }}
+      />
     </div>
+
   );
 }
 
