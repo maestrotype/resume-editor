@@ -1,0 +1,13 @@
+{
+    "editor": "Редактор",
+    "name": "Имя",
+    "title": "Должность",
+    "summary": "О себе",
+    "skills": "Навыки (через запятую)",
+    "experience": "Опыт работы",
+    "education": "Образование",
+    "contacts": "Контакты (email, телефон, LinkedIn)",
+    "avatar": "Аватар",
+    "pdfFormat": "Формат PDF"
+  }
+  

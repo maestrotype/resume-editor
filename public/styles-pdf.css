@@ -1,79 +1,128 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #2c2c2c;
+    font-size: 11pt;
+    color: #333;
+    background: #fdfdfd;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .resume-container {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    padding: 25px 35px;
     background: #fff;
-  }
-  
-  .resume-preview {
-    max-width: 800px;
-    margin: auto;
-    padding: 40px;
-  }
-  
-  .header {
+    box-sizing: border-box;
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 30px;
-  }
-  
-  .avatar {
-    flex: 0 0 130px;
-    margin-right: 25px;
-  }
-  
-  .avatar img {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
+    flex-direction: column;
+    justify-content: space-between;
     border: 1px solid #ddd;
   }
   
-  .contact-info h1 {
+  .resume-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10pt;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #000;
+    margin-bottom: 20px;
+  }
+  
+  .main-section {
+    display: flex;
+    flex-grow: 1;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .left-column {
+    width: 38%;
+  }
+  
+  .right-column {
+    width: 62%;
+  }
+  
+  .avatar {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .name-title {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .name-title h1 {
+    font-size: 22pt;
+    font-weight: 400;
+    letter-spacing: 2px;
     margin: 0;
-    font-size: 26px;
+    text-transform: uppercase;
   }
   
-  .contact-info h2 {
-    margin: 5px 0;
+  .name-title h2 {
+    font-size: 11pt;
     font-weight: normal;
-    font-size: 18px;
-    color: #666;
-  }
-  
-  .contact-info p {
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 5px;
+    text-transform: uppercase;
   }
   
   .section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
   
   .section h3 {
-    margin-bottom: 5px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 11pt;
+    font-weight: 500;
     text-transform: uppercase;
-    color: #444;
-  }
-  
-  .line {
-    height: 2px;
-    background: #000;
     margin-bottom: 10px;
-    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
   }
   
   .section p {
-    margin: 0;
-    line-height: 1.6;
+    font-size: 10pt;
+    margin: 5px 0 10px;
   }
   
   .section ul {
-    margin: 0;
+    font-size: 10pt;
     padding-left: 20px;
-    list-style-type: disc;
+    margin: 5px 0;
+  }
+  
+  .section ul li {
+    margin-bottom: 4px;
+  }
+  
+  .experience-item {
+    margin-bottom: 15px;
+  }
+  
+  .experience-item p {
+    font-weight: 500;
+    font-size: 10pt;
+    margin: 0 0 5px;
+  }
+  
+  .experience-item span {
+    font-weight: bold;
+    margin-left: 8px;
+  }
+  
+  .footer {
+    border-top: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9pt;
+    padding-top: 8px;
+    margin-top: 20px;
+  }
+  
+  .footer span {
+    padding: 0 5px;
   }
   

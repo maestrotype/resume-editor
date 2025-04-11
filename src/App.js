@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import ResumeEditor from "./components/ResumeEditor";
 import ResumePreview from "./components/ResumePreview";
 import html2pdf from "html2pdf.js";
+import './i18n';
 
 function App() {
   const [data, setData] = useState({
@@ -63,22 +64,18 @@ function App() {
 
   return (
     <div className="app">
-      <ResumeEditor data={data} setData={setData} />
-      <select
-        onChange={(e) => setPdfFormat(e.target.value)}
-        style={{ marginBottom: "10px" }}
-      >
-        <option value="a4">A4</option>
-        <option value="a3">A3</option>
-        <option value="letter">Letter</option>
-      </select>
+      <ResumeEditor
+        data={data}
+        setData={setData}
+        pdfFormat={pdfFormat}
+        setPdfFormat={setPdfFormat}
+      />
 
-      <div>
+      <div className="wrapper-preview">
         <ResumePreview ref={previewRef} data={data} />
         <button onClick={handlePreviewPDF} style={{ marginBottom: "10px" }}>
           Preview PDF
         </button>
-
         <button onClick={handleDownloadPDF} style={{ marginTop: "10px" }}>
           Export to PDF
         </button>

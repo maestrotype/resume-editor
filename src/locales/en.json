@@ -1,0 +1,13 @@
+{
+    "editor": "Editor",
+    "name": "Name",
+    "title": "Title",
+    "summary": "Summary",
+    "skills": "Skills (comma separated)",
+    "experience": "Experience",
+    "education": "Education",
+    "contacts": "Contacts (email, phone, LinkedIn)",
+    "avatar": "Avatar",
+    "pdfFormat": "PDF Format"
+  }
+  
