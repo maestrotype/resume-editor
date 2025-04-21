@@ -1,128 +1,256 @@
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 11pt;
-    color: #333;
-    background: #fdfdfd;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .resume-container {
-    width: 210mm;
-    height: 297mm;
-    margin: 0 auto;
-    padding: 25px 35px;
-    background: #fff;
-    box-sizing: border-box;
-    display: flex;
+  font-family: 'Open Sans', sans-serif;
+  background: #f7f9fc;
+}
+
+.resume-preview {
+  max-width: 780px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 780px;
+}
+
+h1, h2, h3, .section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+}
+
+h3 {
+  text-align: center;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.wrapper-editor,
+.wrapper-preview {
+  flex: 1 1 50%;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.editor {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.editor * {
+  box-sizing: border-box;
+}
+
+.editor h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #333;
+}
+
+.editor label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+
+textarea, input[type="text"], input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.language-switcher {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-switcher button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+}
+
+.language-switcher svg {
+  display: block;
+  width: 24px;
+  height: 16px;
+}
+
+.language-switcher button.active {
+  outline: 2px solid #007bff;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button:first-of-type {
+  background-color: #007bff;
+  color: white;
+  margin-right: 10px;
+}
+
+button:first-of-type:hover {
+  background-color: #0069d9;
+  transform: scale(1.03);
+}
+
+button:last-of-type {
+  background-color: #0056b3;
+  color: white;
+}
+
+button:last-of-type:hover {
+  background-color: #004494;
+  transform: scale(1.03);
+}
+
+.preview {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.resume-preview {
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+.right-column h1, h2, h3 {
+  text-align: right;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  background: #f0f0f0;
+  padding: 15px 0;
+  border-bottom: 2px solid #333;
+  margin-bottom: 30px;
+}
+
+.resume-header {
+  border-bottom: 2px solid #333;
+}
+
+.resume-header__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.resume-header__info {
+  flex: 1;
+  text-align: right;
+  min-width: 200px;
+}
+
+.resume-header__avatar-img {
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.resume-layout {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+  position: relative;
+  flex-grow: 1;
+}
+
+.resume-column {
+  flex: 1;
+}
+
+.resume-divider {
+  width: 3px;
+  background-color: #333;
+  margin-top: 20px;
+  margin-bottom: 0;
+  height: calc(100% - 20px);
+  position: absolute;
+  left: 50%;
+}
+
+.footer {
+  background: #f0f0f0;
+  flex-shrink: 0;
+  height: 40px;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .app {
     flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid #ddd;
+    padding: 20px;
   }
-  
-  .resume-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10pt;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #000;
-    margin-bottom: 20px;
+
+  .editor,
+  .preview-wrapper {
+    max-width: 100%;
   }
-  
-  .main-section {
-    display: flex;
-    flex-grow: 1;
-    gap: 40px;
-    margin-bottom: 20px;
+
+  .resume-header__top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
-  .left-column {
-    width: 38%;
+
+  .resume-header__info h1,
+  .resume-header__info h2,
+  .resume-header__info h3 {
+    text-align: center;
   }
-  
-  .right-column {
-    width: 62%;
+
+  .resume-header__avatar-img {
+    max-width: 120px;
+    margin: 0 auto 20px auto;
+    display: block;
   }
-  
-  .avatar {
-    width: 100%;
-    border-radius: 5px;
-    margin-bottom: 20px;
+
+  .resume-divider {
+    display: none;
   }
-  
-  .name-title {
-    text-align: left;
-    margin-bottom: 20px;
+
+  .footer-bar {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .name-title h1 {
-    font-size: 22pt;
-    font-weight: 400;
-    letter-spacing: 2px;
-    margin: 0;
-    text-transform: uppercase;
-  }
-  
-  .name-title h2 {
-    font-size: 11pt;
-    font-weight: normal;
-    margin-top: 5px;
-    text-transform: uppercase;
-  }
-  
-  .section {
-    margin-bottom: 20px;
-  }
-  
-  .section h3 {
-    font-size: 11pt;
-    font-weight: 500;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 4px;
-  }
-  
-  .section p {
-    font-size: 10pt;
-    margin: 5px 0 10px;
-  }
-  
-  .section ul {
-    font-size: 10pt;
-    padding-left: 20px;
-    margin: 5px 0;
-  }
-  
-  .section ul li {
-    margin-bottom: 4px;
-  }
-  
-  .experience-item {
-    margin-bottom: 15px;
-  }
-  
-  .experience-item p {
-    font-weight: 500;
-    font-size: 10pt;
-    margin: 0 0 5px;
-  }
-  
-  .experience-item span {
-    font-weight: bold;
-    margin-left: 8px;
-  }
-  
-  .footer {
-    border-top: 1px solid #000;
-    display: flex;
-    justify-content: space-between;
-    font-size: 9pt;
-    padding-top: 8px;
-    margin-top: 20px;
-  }
-  
-  .footer span {
-    padding: 0 5px;
-  }
-  
+}
+

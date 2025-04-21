@@ -54,7 +54,7 @@ function App() {
           <link rel="stylesheet" href="/styles-pdf.css" />
         </head>
         <body>
-          ${previewRef.current.innerHTML}
+          ${previewRef.current.outerHTML}
         </body>
       </html>
     `;
@@ -64,21 +64,22 @@ function App() {
 
   return (
     <div className="app">
-      <ResumeEditor
-        data={data}
-        setData={setData}
-        pdfFormat={pdfFormat}
-        setPdfFormat={setPdfFormat}
-      />
-
-      <div className="wrapper-preview">
-        <ResumePreview ref={previewRef} data={data} />
+      <div className="wrapper-editor">
+        <ResumeEditor
+          data={data}
+          setData={setData}
+          pdfFormat={pdfFormat}
+          setPdfFormat={setPdfFormat}
+        />
         <button onClick={handlePreviewPDF} style={{ marginBottom: "10px" }}>
           Preview PDF
         </button>
         <button onClick={handleDownloadPDF} style={{ marginTop: "10px" }}>
           Export to PDF
         </button>
+      </div>
+      <div className="wrapper-preview">
+        <ResumePreview ref={previewRef} data={data} />
       </div>
     </div>
   );
