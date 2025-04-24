@@ -1,17 +1,61 @@
 import React, { useEffect, useState } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import html2pdf from "html2pdf.js";
 
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat }) {
+
+  const { t } = useTranslation();
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const { t } = useTranslation();
+  const handleDownloadPDF = () => {
+    if (!previewRef.current) {
+      console.error("Preview element not found");
+      return;
+    }
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    const element = previewRef.current.cloneNode(true);
+
+    const styleLink = document.createElement("link");
+    styleLink.rel = "stylesheet";
+    styleLink.href = "/styles-pdf.css";
+    element.insertBefore(styleLink, element.firstChild);
+
+    html2pdf()
+      .from(element)
+      .set({
+        margin: 10,
+        filename: "My_Resume.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: pdfFormat, orientation: "portrait" },
+      })
+      .save();
+  };
+
+  const handlePreviewPDF = () => {
+    if (!previewRef.current) return;
+
+    const win = window.open("", "_blank");
+    const html = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="/styles-pdf.css" />
+        </head>
+        <body>
+          ${previewRef.current.outerHTML}
+        </body>
+      </html>
+    `;
+    win.document.write(html);
+    win.document.close();
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem("resume-data");
@@ -31,7 +75,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat }) {
     <div className="editor">
       <div className="header-editor">
         <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-          {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+          {theme === "light" ? `🌙 ${t("darkMode")}` : `☀️ ${t("lightMode")}`}
         </button>
 
         <LanguageSwitcher />
@@ -135,8 +179,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat }) {
         />
       </div>
 
-      <label className="file-label">{t("avatar")}
-        📎 Upload Avatar
+      <label className="file-label">
+        📎 {t("avatar")}
         <input
           type="file"
           accept="image/*"
@@ -160,6 +204,14 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat }) {
           <option value="letter">Letter</option>
         </select>
       </div>
+      <div className="button-group">
+          <button className="button-primary" onClick={handlePreviewPDF}>
+          {t("previewPDF")}
+          </button>
+          <button className="button-primary" onClick={handleDownloadPDF}>
+          {t("exportPDF")}
+          </button>
+        </div>
     </div>
   );
 }

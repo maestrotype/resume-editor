@@ -1,14 +1,17 @@
 {
-    "editor": "Editor",
-    "name": "Name",
-    "title": "Title",
-    "position": "Position",
-    "summary": "Summary",
-    "skills": "Skills (comma separated)",
-    "experience": "Experience",
-    "education": "Education",
-    "contacts": "Contacts (email, phone, LinkedIn)",
-    "avatar": "Avatar",
-    "pdfFormat": "PDF Format"
-  }
-  
+  "editor": "Editor",
+  "name": "Name",
+  "title": "Title",
+  "position": "Position",
+  "summary": "Summary",
+  "skills": "Skills (comma separated)",
+  "experience": "Experience",
+  "education": "Education",
+  "contacts": "Contacts (email, phone, LinkedIn)",
+  "avatar": "Upload Avatar",
+  "pdfFormat": "PDF Format",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "previewPDF": "Preview PDF",
+  "exportPDF": "Export to PDF"
+}
