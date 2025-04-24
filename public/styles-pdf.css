@@ -1,6 +1,8 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background: #f7f9fc;
+  margin: 0;
+  padding: 0;
 }
 
 .resume-preview {
@@ -10,6 +12,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.right-column h1,
+h2,
+h3 {
+  text-transform: uppercase;
 }
 
 .wrapper {
@@ -147,13 +155,17 @@ button:last-of-type:hover {
   padding: 0 20px;
 }
 
-.right-column h1, h2, h3 {
+.right-column h1, h2 {
   text-align: right;
+}
+
+h3 {
+  text-align: center;
 }
 
 .top-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   background: #f0f0f0;
   padding: 15px 0;
   border-bottom: 2px solid #333;
@@ -185,6 +197,28 @@ button:last-of-type:hover {
   margin-bottom: 20px;
 }
 
+.resume-header__summary {
+  margin-top: 20px;
+  padding: 0 0 20px;
+}
+
+.resume-header__section-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  color: #333;
+}
+
+.resume-summary-line {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #222;
+}
+
 .resume-layout {
   display: flex;
   justify-content: space-between;
@@ -195,6 +229,52 @@ button:last-of-type:hover {
 
 .resume-column {
   flex: 1;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skill-heading {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.skill-item {
+  padding-left: 12px;
+  position: relative;
+  font-size: 13.5px;
+  color: #222;
+}
+
+.skill-item::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.resume-section.skills,
+.resume-section.contacts {
+  background: #f8f9fc;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.resume-section-heading {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  text-transform: uppercase;
 }
 
 .resume-divider {
@@ -218,9 +298,23 @@ button:last-of-type:hover {
   height: 40px;
   padding: 10px 0;
   box-sizing: border-box;
+}
+
+.contact-block {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.contact-line {
+  display: flex;
   align-items: center;
+  gap: 0px;
+}
+
+.contact-line .icon {
+  width: 20px;
 }
 
 @media (max-width: 768px) {

@@ -2,6 +2,7 @@
     "editor": "Editor",
     "name": "Name",
     "title": "Title",
+    "position": "Position",
     "summary": "Summary",
     "skills": "Skills (comma separated)",
     "experience": "Experience",

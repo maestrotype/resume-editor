@@ -71,12 +71,14 @@ function App() {
           pdfFormat={pdfFormat}
           setPdfFormat={setPdfFormat}
         />
-        <button onClick={handlePreviewPDF} style={{ marginBottom: "10px" }}>
-          Preview PDF
-        </button>
-        <button onClick={handleDownloadPDF} style={{ marginTop: "10px" }}>
-          Export to PDF
-        </button>
+        <div className="button-group">
+          <button className="button-primary" onClick={handlePreviewPDF}>
+            Preview PDF
+          </button>
+          <button className="button-primary" onClick={handleDownloadPDF}>
+            Export to PDF
+          </button>
+        </div>
       </div>
       <div className="wrapper-preview">
         <ResumePreview ref={previewRef} data={data} />

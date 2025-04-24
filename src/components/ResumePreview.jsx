@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import ContactBlock from "./ContactBlock";
 
 const ResumePreview = forwardRef(({ data }, ref) => {
   return (
@@ -16,16 +17,17 @@ const ResumePreview = forwardRef(({ data }, ref) => {
             </div>
             <div className="resume-header__info">
               <h1 className="resume-header__name">{data.name}</h1>
-              <h2 className="resume-header__position">Software Engineer</h2>
+              <h2 className="resume-header__position">{data.position}</h2>
             </div>
           </div>
           <div className="resume-header__summary">
-            <h3 className="resume-header__section-title">Professional Experience Overview</h3>
-            <ul className="resume-header__summary-list">
-              {data.summary.split("\n").map((item, idx) => (
-                <li key={idx}>{item}</li>
+            <div className="resume-header__section-title">Professional Experience Overview</div>
+            {data.summary
+              .split("\n")
+              .filter(line => line.trim() !== "")
+              .map((line, idx) => (
+                <p key={idx} className="resume-summary-line">{line.trim()}</p>
               ))}
-            </ul>
           </div>
         </div>
 
@@ -40,11 +42,18 @@ const ResumePreview = forwardRef(({ data }, ref) => {
             <div className="resume-section resume-skills">
               <h3 className="section-heading">Skills</h3>
               <div className="section-divider"></div>
-              <ul className="skills-list">
-                {data.skills.split(',').map((skill, idx) => (
-                  <li key={idx} className="skill-item">{skill.trim()}</li>
-                ))}
-              </ul>
+              <div className="skills-list">
+                {data.skills
+                  .split("\n")
+                  .filter((line) => line.trim() !== "") // убираем пустые строки
+                  .map((line, idx) =>
+                    line.includes(":") ? (
+                      <div key={idx} className="skill-heading">{line.trim()}</div>
+                    ) : (
+                      <div key={idx} className="skill-item">{line.trim()}</div>
+                    )
+                  )}
+              </div>
             </div>
           </div>
 
@@ -63,9 +72,10 @@ const ResumePreview = forwardRef(({ data }, ref) => {
         </div>
 
         <div className="footer">
-          {data.contacts?.split("\n").map((line, idx) => (
+          <ContactBlock contacts={data.contacts} />
+          {/* {data.contacts?.split("\n").map((line, idx) => (
             <span key={idx}>{line}</span>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
