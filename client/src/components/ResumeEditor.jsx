@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import html2pdf from "html2pdf.js";
 
 
-function ResumeEditor({ data, setData, pdfFormat, setPdfFormat }) {
+function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
   const { t } = useTranslation();
 

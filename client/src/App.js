@@ -26,6 +26,7 @@ function App() {
           setData={setData}
           pdfFormat={pdfFormat}
           setPdfFormat={setPdfFormat}
+          previewRef={previewRef}
         />
       </div>
       <div className="wrapper-preview">
