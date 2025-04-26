@@ -30,10 +30,10 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
       const result = await response.json();
       console.log("Resume save is success:", result);
-      alert("Resume save is success!");
+      alert(t("resumeSaveSuccess"));
     } catch (error) {
       console.error("❌ Error save:", error);
-      alert("Error save");
+      alert(t("resumeSaveError"));
     }
   };
 
@@ -190,9 +190,9 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
       <div className="form-group">
         <label>{t("contacts")}</label>
         <textarea
-          name="education"
-          placeholder={t("education")}
-          value={data.education}
+          name="contacts"
+          placeholder={t("contacts")}
+          value={data.contacts}
           onChange={(e) => {
             handleChange(e);
             e.target.style.height = "auto";

@@ -13,6 +13,12 @@
   "darkMode": "Темная тема",
   "lightMode": "Светлая тема",
   "previewPDF": "Предпросмотр PDF",
-  "exportPDF": "Экспорт в PDF",
-  "saveToDatabase": "Сохранение в базу данных"
+  "myResumes": "Мои резюме",
+  "templates": "Шаблоны",
+  "exportPDF": "Экспорт PDF",
+  "save": "Сохранить",
+  "resumeSaveSuccess": "Резюме успешно сохранено!",
+  "resumeSaveError": "Ошибка при сохранении резюме. Пожалуйста, попробуйте снова.",
+  "resumeDeleteSuccess": "Резюме успешно удалено!",
+  "resumeDeleteError": "Ошибка при удалении резюме. Пожалуйста, попробуйте снова."
 }

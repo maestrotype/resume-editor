@@ -13,6 +13,12 @@
   "darkMode": "Dark Mode",
   "lightMode": "Light Mode",
   "previewPDF": "Preview PDF",
-  "exportPDF": "Export to PDF",
-  "saveToDatabase": "Save to Database"
+  "myResumes": "My Resumes",
+  "templates": "Templates",
+  "exportPDF": "Export PDF",
+  "save": "Save",
+  "resumeSaveSuccess": "Resume saved successfully!",
+  "resumeSaveError": "Error saving resume. Please try again.",
+  "resumeDeleteSuccess": "Resume deleted successfully!",
+  "resumeDeleteError": "Error deleting resume. Please try again."
 }

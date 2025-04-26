@@ -1,9 +1,14 @@
+// src/App.js
 import React, { useRef, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
 import ResumeEditor from "./components/ResumeEditor";
-import ResumePreview from "./components/ResumePreview";
-import './i18n';
+import ResumeList from "./components/ResumeList";
+import Templates from "./components/Templates";
+import ResumeDetail from "./components/ResumeDetail";
 
 function App() {
+  const [theme, setTheme] = useState("light");
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -11,27 +16,56 @@ function App() {
     skills: "",
     experience: "",
     education: "",
-    contacts: ""
+    contacts: "",
   });
 
   const previewRef = useRef();
-
   const [pdfFormat, setPdfFormat] = useState("a4");
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+    document.documentElement.classList.toggle("dark", theme === "light");
+  };
+
+  const handleExportPDF = () => {
+    console.log("Export PDF clicked");
+    // Implement PDF export logic
+  };
+
+  const handleSave = () => {
+    console.log("Save to database clicked");
+    // Implement save logic
+  };
+
   return (
-    <div className="app">
-      <div className="wrapper-editor">
-        <ResumeEditor
-          data={data}
-          setData={setData}
-          pdfFormat={pdfFormat}
-          setPdfFormat={setPdfFormat}
-          previewRef={previewRef}
+    <div className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>
+      <Router>
+        <Header
+          toggleTheme={toggleTheme}
+          currentTheme={theme}
+          handleExportPDF={handleExportPDF}
+          handleSave={handleSave}
         />
-      </div>
-      <div className="wrapper-preview">
-        <ResumePreview ref={previewRef} data={data} />
-      </div>
+        <main className="p-4">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ResumeEditor
+                  data={data}
+                  setData={setData}
+                  pdfFormat={pdfFormat}
+                  setPdfFormat={setPdfFormat}
+                  previewRef={previewRef}
+                />
+              }
+            />
+            <Route path="/resumes" element={<ResumeList />} />
+            <Route path="/templates" element={<Templates />} />
+            <Route path="/resumes/:id" element={<ResumeDetail />} />
+          </Routes>
+        </main>
+      </Router>
     </div>
   );
 }
