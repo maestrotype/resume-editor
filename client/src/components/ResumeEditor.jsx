@@ -14,6 +14,29 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const handleSaveToDatabase = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/resumes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка сохранения резюме");
+      }
+
+      const result = await response.json();
+      console.log("Resume save is success:", result);
+      alert("Resume save is success!");
+    } catch (error) {
+      console.error("❌ Error save:", error);
+      alert("Error save");
+    }
+  };
+
   const handleDownloadPDF = () => {
     if (!previewRef.current) {
       console.error("Preview element not found");
@@ -205,13 +228,17 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
         </select>
       </div>
       <div className="button-group">
-          <button className="button-primary" onClick={handlePreviewPDF}>
+        <button className="button-primary" onClick={handlePreviewPDF}>
           {t("previewPDF")}
-          </button>
-          <button className="button-primary" onClick={handleDownloadPDF}>
+        </button>
+        <button className="button-primary" onClick={handleDownloadPDF}>
           {t("exportPDF")}
-          </button>
-        </div>
+        </button>
+        <button className="button-primary" onClick={handleSaveToDatabase}>
+          {t("saveToDatabase")}
+        </button>
+
+      </div>
     </div>
   );
 }

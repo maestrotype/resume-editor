@@ -13,5 +13,6 @@
   "darkMode": "Dark Mode",
   "lightMode": "Light Mode",
   "previewPDF": "Preview PDF",
-  "exportPDF": "Export to PDF"
+  "exportPDF": "Export to PDF",
+  "saveToDatabase": "Save to Database"
 }

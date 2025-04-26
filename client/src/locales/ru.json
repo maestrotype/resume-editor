@@ -13,5 +13,6 @@
   "darkMode": "Темная тема",
   "lightMode": "Светлая тема",
   "previewPDF": "Предпросмотр PDF",
-  "exportPDF": "Экспорт в PDF"
+  "exportPDF": "Экспорт в PDF",
+  "saveToDatabase": "Сохранение в базу данных"
 }

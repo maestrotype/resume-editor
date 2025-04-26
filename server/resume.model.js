@@ -1,17 +1,17 @@
-const { v4: uuid } = require("uuid");
+const mongoose = require("mongoose");
 
-class Resume {
-  constructor({ name, title, summary, skills, experience, education, contacts }) {
-    this.id = uuid();
-    this.name = name || "";
-    this.title = title || "";
-    this.summary = summary || "";
-    this.skills = skills || "";
-    this.experience = experience || "";
-    this.education = education || "";
-    this.contacts = contacts || "";
-    this.createdAt = new Date().toISOString();
+const ResumeSchema = new mongoose.Schema({
+  name: String,
+  title: String,
+  summary: String,
+  skills: String,
+  experience: String,
+  education: String,
+  contacts: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-}
+});
 
-module.exports = Resume;
+module.exports = mongoose.model("Resume", ResumeSchema);

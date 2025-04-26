@@ -2,7 +2,7 @@
   "name": "resume-editor-clean",
   "scripts": {
     "client": "npm start --prefix client",
-    "server": "node server/index.js",
+    "server": "npm start --prefix server",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "devDependencies": {
