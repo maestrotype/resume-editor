@@ -96,13 +96,13 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
   return (
     <div className="editor">
-      <div className="header-editor">
+      {/* <div className="header-editor">
         <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
           {theme === "light" ? `🌙 ${t("darkMode")}` : `☀️ ${t("lightMode")}`}
         </button>
 
         <LanguageSwitcher />
-      </div>
+      </div> */}
       <h2 className="section-title">{t("editor")}</h2>
 
       <label>{t("name")}</label>

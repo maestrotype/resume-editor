@@ -1,0 +1,123 @@
+/* src/styles/header.css */
+
+header {
+    background-color: var(--color-bg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+header nav {
+    display: flex;
+    gap: 1rem;
+}
+
+header nav a {
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.fixed-width {
+    min-width: 110px;
+    width: 110px;
+    text-align: center;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.header-buttons button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.header-buttons button:hover {
+    background-color: #7b5fc8;
+}
+
+.language-switcher {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.theme-switcher {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Mobile version */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    header nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--color-bg);
+        padding: 1rem 0;
+    }
+
+    .nav.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .header-buttons {
+        flex-wrap: wrap;
+    }
+}

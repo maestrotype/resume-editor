@@ -4,5 +4,11 @@ import App from "./App";
 import './i18n';
 import "./styles.css";
 
+import './styles/base.css';
+import './styles/layout.css';
+import './styles/resume-template.css';
+// import './styles/header.css';
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
