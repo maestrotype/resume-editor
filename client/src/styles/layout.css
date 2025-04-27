@@ -9,3 +9,23 @@
     padding: 1rem;
   }
   
+  .app {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 70px); /* Минус высота хедера */
+  }
+  
+  .wrapper-editor {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  .wrapper-preview {
+    flex: 1;
+    padding: 1rem;
+    background-color: var(--background-color);
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+  }
+  
