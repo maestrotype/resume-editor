@@ -41,7 +41,6 @@ header nav a:hover {
 
 .fixed-width {
     min-width: 110px;
-    width: 110px;
     text-align: center;
 }
 
@@ -68,6 +67,10 @@ header nav a:hover {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .header-buttons button:hover {

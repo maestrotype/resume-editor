@@ -27,6 +27,11 @@ function App() {
     document.documentElement.classList.toggle("dark", theme === "light");
   };
 
+  const handlePreviewPDF = () => {
+    console.log("Export PDF clicked");
+    // Implement PDF export logic
+  };
+
   const handleExportPDF = () => {
     console.log("Export PDF clicked");
     // Implement PDF export logic
@@ -43,6 +48,7 @@ function App() {
         <Header
           toggleTheme={toggleTheme}
           currentTheme={theme}
+          handlePreviewPDF={handlePreviewPDF}
           handleExportPDF={handleExportPDF}
           handleSave={handleSave}
         />

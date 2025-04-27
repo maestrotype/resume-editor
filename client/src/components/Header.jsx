@@ -1,10 +1,10 @@
-// Новый src/components/Header.jsx
+// src/components/Header.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/header.css";
 
-function Header({ toggleTheme, currentTheme, handleExportPDF, handleSave }) {
+function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, handleSave }) {
   const { t, i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,27 +18,46 @@ function Header({ toggleTheme, currentTheme, handleExportPDF, handleSave }) {
 
   return (
     <header className="header sticky-header">
-      <div className="logo">ResumeEditor</div>
-      <nav className={`nav ${menuOpen ? "open" : ""}`}>
-        <Link to="/" onClick={() => setMenuOpen(false)}>{t('editor')}</Link>
-        <Link to="/resumes" onClick={() => setMenuOpen(false)}>{t('myResumes')}</Link>
-        <Link to="/templates" onClick={() => setMenuOpen(false)}>{t('templates')}</Link>
-      </nav>
-      <div className="header-buttons">
-        <button onClick={toggleTheme} className="icon-button" aria-label="Toggle Theme">
+      <div className="header-left">
+        <Link to="/" className="logo">
+          ResumeEditor
+        </Link>
+        <nav className={`nav ${menuOpen ? "open" : ""}`}>
+          <Link to="/" className="nav-link">
+            {t('editor')}
+          </Link>
+          <Link to="/resumes" className="nav-link">
+            {t('myResumes')}
+          </Link>
+          <Link to="/templates" className="nav-link">
+            {t('templates')}
+          </Link>
+        </nav>
+      </div>
+
+      <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}>
+        <button onClick={toggleTheme} className="icon-button">
           {currentTheme === "light" ? "🌙" : "☀️"}
         </button>
-        <button onClick={toggleLanguage} className="icon-button" aria-label="Toggle Language">
-          {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
+
+        <button onClick={handlePreviewPDF} className="button-primary" >
+          {t("previewPDF")}
         </button>
-        <button onClick={handleExportPDF} className="action-button">
+
+        <button onClick={handleExportPDF} className="action-button fixed-width">
           {t('exportPDF')}
         </button>
-        <button onClick={handleSave} className="action-button save-button">
+
+        <button onClick={handleSave} className="action-button fixed-width">
           {t('save')}
         </button>
-        <button className="burger" onClick={toggleMenu}>
-          {menuOpen ? "✖️" : "☰"}
+
+        <button onClick={toggleLanguage} className="icon-button">
+          {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
+        </button>
+
+        <button className="menu-toggle" onClick={toggleMenu} aria-label="Menu Toggle">
+          ☰
         </button>
       </div>
     </header>

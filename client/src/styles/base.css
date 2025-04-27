@@ -11,3 +11,56 @@ html, body {
     color: inherit;
   }
   
+  .custom-button button{
+    background-color: #eaeaea;
+    color: #222;
+    padding: 0.5rem 1rem;
+    margin: 0 2px;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .custom-button button:hover {
+    background-color: #e9e9e9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-button button:active {
+    background-color: #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .custom-button-primary button{
+    background-color: #6366f1;
+    color: #fff;
+    border: none;
+  }
+  
+  .custom-button-primary button:hover {
+    background-color: #4f46e5;
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+  }
+  
+  .custom-button-primary button:active {
+    background-color: #4338ca;
+    box-shadow: 0 2px 4px rgba(67, 56, 202, 0.5);
+  }
+  
+  [data-theme="dark"] .custom-button button {
+    background-color: #333;
+    color: #eee;
+    border: 1px solid #555;
+  }
+  
+  [data-theme="dark"] .custom-button button:hover {
+    background-color: #444;
+  }
+  
+  [data-theme="dark"] .custom-button button:active {
+    background-color: #555;
+  }
+  
