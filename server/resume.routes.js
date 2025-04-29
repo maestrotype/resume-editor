@@ -28,4 +28,14 @@ router.put("/resumes/:id", async (req, res) => {
   res.json(updated);
 });
 
+router.get("/resumes/:id", async (req, res) => {
+  try {
+    const resume = await Resume.findById(req.params.id);
+    if (!resume) return res.status(404).json({ message: "Resume not found" });
+    res.json(resume);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching resume" });
+  }
+});
+
 module.exports = router;

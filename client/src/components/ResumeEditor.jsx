@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
-import html2pdf from "html2pdf.js";
-
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
@@ -35,49 +32,6 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
       console.error("❌ Error save:", error);
       alert(t("resumeSaveError"));
     }
-  };
-
-  const handleDownloadPDF = () => {
-    if (!previewRef.current) {
-      console.error("Preview element not found");
-      return;
-    }
-
-    const element = previewRef.current.cloneNode(true);
-
-    const styleLink = document.createElement("link");
-    styleLink.rel = "stylesheet";
-    styleLink.href = "/styles-pdf.css";
-    element.insertBefore(styleLink, element.firstChild);
-
-    html2pdf()
-      .from(element)
-      .set({
-        margin: 10,
-        filename: "My_Resume.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: pdfFormat, orientation: "portrait" },
-      })
-      .save();
-  };
-
-  const handlePreviewPDF = () => {
-    if (!previewRef.current) return;
-
-    const win = window.open("", "_blank");
-    const html = `
-      <html>
-        <head>
-          <link rel="stylesheet" href="/styles-pdf.css" />
-        </head>
-        <body>
-          ${previewRef.current.outerHTML}
-        </body>
-      </html>
-    `;
-    win.document.write(html);
-    win.document.close();
   };
 
   useEffect(() => {
@@ -226,18 +180,6 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
           <option value="a3">A3</option>
           <option value="letter">Letter</option>
         </select>
-      </div>
-      <div className="button-group">
-        <button className="button-primary" onClick={handlePreviewPDF}>
-          {t("previewPDF")}
-        </button>
-        <button className="button-primary" onClick={handleDownloadPDF}>
-          {t("exportPDF")}
-        </button>
-        <button className="button-primary" onClick={handleSaveToDatabase}>
-          {t("saveToDatabase")}
-        </button>
-
       </div>
     </div>
   );

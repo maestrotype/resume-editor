@@ -1,22 +1,43 @@
 // src/components/ResumeDetail.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
-const ResumeDetail = () => {
+function ResumeDetail() {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const [resume, setResume] = useState(null);
+
+  useEffect(() => {
+    fetch(`/api/resumes/${id}`)
+      .then(response => response.json())
+      .then(data => setResume(data))
+      .catch(error => console.error("Error loading resume:", error));
+  }, [id]);
+
+  if (!resume) {
+    return <p className="p-4 text-gray-600">Loading...</p>;
+  }
 
   return (
-    <div className="p-8 text-center">
-      <h1 className="text-3xl font-bold mb-4 dark:text-white">
-        {t('resumeDetailTitle')} #{id}
-      </h1>
-      <p className="text-gray-600 dark:text-gray-300">
-        {t('resumeDetailDescription')}
-      </p>
+    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h1 className="text-3xl font-bold mb-2 dark:text-white">{resume.name}</h1>
+      <p className="text-lg mb-4 dark:text-gray-300">{resume.title}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2 dark:text-white">Summary</h2>
+      <p className="dark:text-gray-300">{resume.summary}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2 dark:text-white">Skills</h2>
+      <p className="dark:text-gray-300">{resume.skills}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2 dark:text-white">Experience</h2>
+      <p className="dark:text-gray-300">{resume.experience}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2 dark:text-white">Education</h2>
+      <p className="dark:text-gray-300">{resume.education}</p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2 dark:text-white">Contacts</h2>
+      <p className="dark:text-gray-300">{resume.contacts}</p>
     </div>
   );
-};
+}
 
 export default ResumeDetail;

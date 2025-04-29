@@ -1,5 +1,7 @@
 // src/App.js
 import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import html2pdf from "html2pdf.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import ResumeEditor from "./components/ResumeEditor";
@@ -10,6 +12,7 @@ import ResumeDetail from "./components/ResumeDetail";
 
 function App() {
   const [theme, setTheme] = useState("light");
+  const { t } = useTranslation();
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -29,18 +32,69 @@ function App() {
   };
 
   const handlePreviewPDF = () => {
-    console.log("Export PDF clicked");
-    // Implement PDF export logic
+    if (!previewRef.current) return;
+
+    const win = window.open("", "_blank");
+    const html = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="/styles-pdf.css" />
+        </head>
+        <body>
+          ${previewRef.current.outerHTML}
+        </body>
+      </html>
+    `;
+    win.document.write(html);
+    win.document.close();
   };
 
   const handleExportPDF = () => {
-    console.log("Export PDF clicked");
-    // Implement PDF export logic
+    if (!previewRef.current) {
+      console.error("Preview element not found");
+      return;
+    }
+
+    const element = previewRef.current.cloneNode(true);
+
+    const styleLink = document.createElement("link");
+    styleLink.rel = "stylesheet";
+    styleLink.href = "/styles-pdf.css";
+    element.insertBefore(styleLink, element.firstChild);
+
+    html2pdf()
+      .from(element)
+      .set({
+        margin: 10,
+        filename: "My_Resume.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: pdfFormat, orientation: "portrait" },
+      })
+      .save();
   };
 
-  const handleSave = () => {
-    console.log("Save to database clicked");
-    // Implement save logic
+  const handleSave = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/resumes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка сохранения резюме");
+      }
+
+      const result = await response.json();
+      console.log("Resume save is success:", result);
+      alert(t("resumeSaveSuccess"));
+    } catch (error) {
+      console.error("❌ Error save:", error);
+      alert(t("resumeSaveError"));
+    }
   };
 
   return (

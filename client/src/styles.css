@@ -405,7 +405,7 @@ h3 {
   background-color: #333;
   margin-top: 20px;
   margin-bottom: 0;
-  height: calc(100% - 20px);
+  height: calc(100% - 51px);
   position: absolute;
   left: 50%;
 }
