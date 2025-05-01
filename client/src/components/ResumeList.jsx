@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 function ResumeList() {
   const { t } = useTranslation();
+  const API_URL = process.env.REACT_APP_API_URL;
   const [resumes, setResumes] = useState([]);
 
   useEffect(() => {
@@ -11,7 +12,7 @@ function ResumeList() {
   }, []);
 
   const loadResumes = () => {
-    fetch("/api/resumes")
+    fetch(`${API_URL}/resumes`)
       .then(response => response.json())
       .then(data => setResumes(data))
       .catch(error => console.error("Error loading resumes:", error));
@@ -21,7 +22,7 @@ function ResumeList() {
     if (!window.confirm(t('confirmDelete') || "Are you sure you want to delete this resume?")) return;
 
     try {
-      const response = await fetch(`/api/resumes/${id}`, {
+      const response = await fetch(`${API_URL}/resumes/${id}`, {
         method: "DELETE",
       });
 
