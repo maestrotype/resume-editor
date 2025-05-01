@@ -5,34 +5,34 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
   const { t } = useTranslation();
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  // const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSaveToDatabase = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/api/resumes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+  // const handleSaveToDatabase = async () => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/resumes`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Ошибка сохранения резюме");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Ошибка сохранения резюме");
+  //     }
 
-      const result = await response.json();
-      console.log("Resume save is success:", result);
-      alert(t("resumeSaveSuccess"));
-    } catch (error) {
-      console.error("❌ Error save:", error);
-      alert(t("resumeSaveError"));
-    }
-  };
+  //     const result = await response.json();
+  //     console.log("Resume save is success:", result);
+  //     alert(t("resumeSaveSuccess"));
+  //   } catch (error) {
+  //     console.error("❌ Error save:", error);
+  //     alert(t("resumeSaveError"));
+  //   }
+  // };
 
   useEffect(() => {
     const saved = localStorage.getItem("resume-data");

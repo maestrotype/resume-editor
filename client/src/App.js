@@ -11,6 +11,7 @@ import Templates from "./components/Templates";
 import ResumeDetail from "./components/ResumeDetail";
 
 function App() {
+  const API_URL = process.env.REACT_APP_API_URL;
   const [theme, setTheme] = useState("light");
   const { t } = useTranslation();
   const [data, setData] = useState({
@@ -76,7 +77,7 @@ function App() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/resumes", {
+      const response = await fetch(`${API_URL}/resumes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

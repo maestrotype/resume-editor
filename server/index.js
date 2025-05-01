@@ -11,6 +11,7 @@ connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
