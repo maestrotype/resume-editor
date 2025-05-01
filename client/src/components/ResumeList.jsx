@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 function ResumeList() {
   const { t } = useTranslation();
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "/api";
   const [resumes, setResumes] = useState([]);
 
   useEffect(() => {

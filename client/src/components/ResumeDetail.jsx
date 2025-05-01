@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 function ResumeDetail() {
   const { id } = useParams();
   const [resume, setResume] = useState(null);
+  const API_URL = process.env.REACT_APP_API_URL || "/api";
 
   useEffect(() => {
-    fetch(`/api/resumes/${id}`)
+    fetch(`${API_URL}/resumes/${id}`)
       .then(response => response.json())
       .then(data => setResume(data))
       .catch(error => console.error("Error loading resume:", error));
