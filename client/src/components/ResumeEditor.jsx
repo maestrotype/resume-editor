@@ -43,10 +43,10 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
     localStorage.setItem("resume-data", JSON.stringify(data));
   }, [data]);
 
-  useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  // useEffect(() => {
+  //   document.body.setAttribute("data-theme", theme);
+  //   localStorage.setItem("theme", theme);
+  // }, [theme]);
 
   return (
     <div className="editor">
