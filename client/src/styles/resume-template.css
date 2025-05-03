@@ -3,7 +3,7 @@
     margin: auto;
     padding: 2rem;
     background-color: white;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   }
   

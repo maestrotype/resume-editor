@@ -22,12 +22,7 @@ const ResumePreview = forwardRef(({ data }, ref) => {
           </div>
           <div className="resume-header__summary">
             <div className="resume-header__section-title">Professional Experience Overview</div>
-            {data.summary
-              .split("\n")
-              .filter(line => line.trim() !== "")
-              .map((line, idx) => (
-                <p key={idx} className="resume-summary-line">{line.trim()}</p>
-              ))}
+              <div className="resume-summary">{data.summary}</div>
           </div>
         </div>
 

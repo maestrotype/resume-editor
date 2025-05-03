@@ -1,0 +1,39 @@
+.resume-detail {
+    max-width: 768px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .resume-detail__name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resume-detail__title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .resume-detail__section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .resume-detail__text {
+    color: #444;
+    line-height: 1.6;
+  }
+  
+  .resume-detail__loading {
+    padding: 2rem;
+    color: #777;
+    text-align: center;
+  }
+  

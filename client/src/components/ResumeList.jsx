@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import "../styles/resume-list.css";
 
 function ResumeList() {
   const { t } = useTranslation();
@@ -38,25 +39,25 @@ function ResumeList() {
 
   if (resumes.length === 0) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 dark:text-gray-300 text-lg">{t('noResumes')}</p>
+      <div className="resume-empty">
+        <p>{t('noResumes')}</p>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
+    <div className="resume-list">
       {resumes.map(resume => (
-        <div key={resume._id} className="border rounded-lg p-4 shadow-md bg-white dark:bg-gray-800">
-          <h2 className="text-xl font-bold mb-2 dark:text-white">{resume.name}</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">{resume.summary?.slice(0, 80)}...</p>
-          <div className="flex gap-2">
-            <Link to={`/resumes/${resume._id}`} className="bg-blue-500 text-white px-3 py-1 rounded-md">
+        <div key={resume._id} className="resume-card">
+          <h2 className="resume-title">{resume.name}</h2>
+          <p className="resume-summary">{resume.summary?.slice(0, 80)}...</p>
+          <div className="resume-actions">
+            <Link to={`/resumes/${resume._id}`} className="btn btn-view">
               {t('view')}
             </Link>
             <button
               onClick={() => handleDelete(resume._id)}
-              className="bg-red-500 text-white px-3 py-1 rounded-md"
+              className="btn btn-delete"
             >
               {t('delete')}
             </button>
