@@ -12,12 +12,13 @@
   .app {
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 70px); /* Минус высота хедера */
+    height: calc(100vh - 70px);
+    box-sizing: border-box;
   }
   
   .wrapper-editor {
     flex: 1;
-    padding: 1rem;
+    /* padding: 1rem; */
     overflow-y: auto;
   }
   

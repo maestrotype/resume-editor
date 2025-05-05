@@ -11,29 +11,6 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  // const handleSaveToDatabase = async () => {
-  //   try {
-  //     const response = await fetch(`${API_URL}/resumes`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Ошибка сохранения резюме");
-  //     }
-
-  //     const result = await response.json();
-  //     console.log("Resume save is success:", result);
-  //     alert(t("resumeSaveSuccess"));
-  //   } catch (error) {
-  //     console.error("❌ Error save:", error);
-  //     alert(t("resumeSaveError"));
-  //   }
-  // };
-
   useEffect(() => {
     const saved = localStorage.getItem("resume-data");
     if (saved) setData(JSON.parse(saved));
@@ -43,20 +20,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
     localStorage.setItem("resume-data", JSON.stringify(data));
   }, [data]);
 
-  // useEffect(() => {
-  //   document.body.setAttribute("data-theme", theme);
-  //   localStorage.setItem("theme", theme);
-  // }, [theme]);
-
   return (
     <div className="editor">
-      {/* <div className="header-editor">
-        <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-          {theme === "light" ? `🌙 ${t("darkMode")}` : `☀️ ${t("lightMode")}`}
-        </button>
-
-        <LanguageSwitcher />
-      </div> */}
       <h2 className="section-title">{t("editor")}</h2>
 
       <label>{t("name")}</label>
