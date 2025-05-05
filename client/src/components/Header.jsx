@@ -44,11 +44,9 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
             {t('templates')}
           </Link>
         </nav>
-        {menuOpen && (
-        <button className="menu-close" onClick={toggleMenu} aria-label="Close Menu">
-          ❌
-        </button>
-      )}
+        <div className="menu-toggle" onClick={toggleMenu} aria-label="Menu Toggle">
+          <div className={`icon-toggle ${menuOpen ? 'close' : ''}`}></div>
+        </div>
       </div>
 
       <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}>
@@ -70,10 +68,6 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
 
         <button onClick={toggleLanguage} className="icon-button">
           {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
-        </button>
-
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Menu Toggle">
-          ☰
         </button>
       </div>
     </header>

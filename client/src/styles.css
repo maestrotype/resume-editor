@@ -5,6 +5,7 @@
   --color-input-bg: #fff;
   --color-input-border: #ccc;
   --color-primary: #1976d2;
+  --color-icon: #222;
 }
 
 [data-theme="dark"] {
@@ -14,6 +15,7 @@
   --color-input-bg: #1e1e1e;
   --color-input-border: #333;
   --color-primary: #90caf9;
+  --color-icon: #e0e0e0;
 }
 
 :root,
@@ -454,6 +456,56 @@ h3 {
 
   .mobile-only {
     display: block;
+  }
+
+  .icon-toggle {
+    height: 16px;
+    width: 2px;
+    right: 10px;
+    background-color: var(--color-icon);
+    position: relative;
+    rotate: 90deg;
+    transition-duration: 0.5s
+  }
+
+  .icon-toggle::after {
+    content: "";
+    height: 16px;
+    width: 2px;
+    background-color: var(--color-icon);
+    position: absolute;
+    rotate: 0deg;
+    left: 5px;
+  }
+
+  .icon-toggle::before {
+    content: "";
+    height: 16px;
+    width: 2px;
+    background-color: var(--color-icon);
+    position: absolute;
+    rotate: 0deg;
+    left: -5px;
+  }
+
+  .icon-toggle.close {
+    rotate: 45deg;
+  }
+
+  .icon-toggle.close::after {
+    rotate: 270deg;
+    top: 0;
+    left: 0;
+  }
+
+  .icon-toggle.close::before {
+    display: none;
+  }
+
+  .menu-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 
   .app {

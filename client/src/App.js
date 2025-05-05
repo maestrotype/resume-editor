@@ -31,9 +31,11 @@ function App() {
   const [pdfFormat, setPdfFormat] = useState("a4");
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-    document.documentElement.classList.toggle("dark", theme === "light");
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
+  
 
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;

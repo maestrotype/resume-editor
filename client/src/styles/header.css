@@ -105,15 +105,17 @@ header nav a:hover {
     }
 
     .nav {
-        display: none;
+        display: flex;
         flex-direction: column;
         width: 100%;
         background: var(--color-bg);
-        padding: 1rem 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.7s 0s;
     }
 
     .nav.open {
-        display: flex;
+        max-height: 300px;
     }
 
     .menu-toggle {
