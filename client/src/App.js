@@ -9,11 +9,14 @@ import ResumePreview from "./components/ResumePreview";
 import ResumeList from "./components/ResumeList";
 import Templates from "./components/Templates";
 import ResumeDetail from "./components/ResumeDetail";
+import MobileTabs from "./components/MobileTabs";
 
 function App() {
   const API_URL = process.env.REACT_APP_API_URL;
   const [theme, setTheme] = useState("light");
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("editor");
+  const isMobile = window.innerWidth <= 768;
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -115,13 +118,33 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    <ResumeEditor
-                      data={data}
-                      setData={setData}
-                      pdfFormat={pdfFormat}
-                      setPdfFormat={setPdfFormat}
-                      previewRef={previewRef}
-                    />
+                    <>
+                      {isMobile ? (
+                        <>
+                          {activeTab === "editor" && (
+                            <ResumeEditor
+                              data={data}
+                              setData={setData}
+                              pdfFormat={pdfFormat}
+                              setPdfFormat={setPdfFormat}
+                              previewRef={previewRef}
+                            />
+                          )}
+                          {activeTab === "preview" && (
+                            <ResumePreview ref={previewRef} data={data} />
+                          )}
+                          <MobileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                        </>
+                      ) : (
+                        <ResumeEditor
+                          data={data}
+                          setData={setData}
+                          pdfFormat={pdfFormat}
+                          setPdfFormat={setPdfFormat}
+                          previewRef={previewRef}
+                        />
+                      )}
+                    </>
                   }
                 />
                 <Route path="/resumes" element={<ResumeList />} />

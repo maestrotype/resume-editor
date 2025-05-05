@@ -1,5 +1,5 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/header.css";
@@ -15,6 +15,17 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setMenuOpen(false);
+      }
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);  
 
   return (
     <header className="header sticky-header">
@@ -33,6 +44,11 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
             {t('templates')}
           </Link>
         </nav>
+        {menuOpen && (
+        <button className="menu-close" onClick={toggleMenu} aria-label="Close Menu">
+          ❌
+        </button>
+      )}
       </div>
 
       <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}>
