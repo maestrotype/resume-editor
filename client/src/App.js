@@ -102,26 +102,29 @@ function App() {
 
   const handleSave = async () => {
     try {
+      const payload = { ...data };
+      delete payload._id;
+  
       const response = await fetch(`${API_URL}/resumes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
-
+  
       if (!response.ok) {
-        throw new Error("Ошибка сохранения резюме");
+        throw new Error("Failed to save resume");
       }
-
+  
       const result = await response.json();
-      console.log("Resume save is success:", result);
-      alert(t("resumeSaveSuccess"));
+      console.log("Resume saved:", result);
+      alert("Resume saved successfully!");
     } catch (error) {
-      console.error("❌ Error save:", error);
-      alert(t("resumeSaveError"));
+      console.error("Save error:", error);
+      alert("Failed to save resume. Please try again.");
     }
-  };
+  };  
 
   return (
     <main className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>
