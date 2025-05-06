@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/resume-list.css";
 
 function ResumeList() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL || "/api";
   const [resumes, setResumes] = useState([]);
 
@@ -17,6 +17,10 @@ function ResumeList() {
       .then(response => response.json())
       .then(data => setResumes(data))
       .catch(error => console.error("Error loading resumes:", error));
+  };
+
+  const handleView = (resume) => {
+    navigate("/", { state: { resume } });
   };
 
   const handleDelete = async (id) => {
@@ -52,9 +56,7 @@ function ResumeList() {
           <h2 className="resume-title">{resume.name}</h2>
           <p className="resume-summary">{resume.summary?.slice(0, 80)}...</p>
           <div className="resume-actions">
-            <Link to={`/resumes/${resume._id}`} className="btn btn-view">
-              {t('view')}
-            </Link>
+            <button onClick={() => handleView(resume)} className="btn">view</button>
             <button
               onClick={() => handleDelete(resume._id)}
               className="btn btn-delete"
