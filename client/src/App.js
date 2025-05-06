@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import html2pdf from "html2pdf.js";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import ResumeEditor from "./components/ResumeEditor";
 import ResumePreview from "./components/ResumePreview";
@@ -19,6 +19,7 @@ function App() {
   const API_URL = process.env.REACT_APP_API_URL;
   const [theme, setTheme] = useState("light");
   const { t } = useTranslation();
+  const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [data, setData] = useState({
     name: "",
@@ -29,6 +30,12 @@ function App() {
     education: "",
     contacts: "",
   });
+
+  useEffect(() => {
+    if (location.state?.resume) {
+      setData(location.state.resume);
+    }
+  }, [location.state]);
 
   const previewRef = useRef();
   const [pdfFormat, setPdfFormat] = useState("a4");
@@ -43,7 +50,7 @@ function App() {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-  
+
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -118,69 +125,67 @@ function App() {
 
   return (
     <main className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>
-      <Router>
-        <Header
-          toggleTheme={toggleTheme}
-          currentTheme={theme}
-          handlePreviewPDF={handlePreviewPDF}
-          handleExportPDF={handleExportPDF}
-          handleSave={handleSave}
-        />
-        <div className="app p-4">
-          <div className="wrapper-editor">
-            <main className="p-4">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      {isMobile ? (
-                        <Swiper
-                          modules={[Navigation, Pagination]}
-                          spaceBetween={50}
-                          slidesPerView={1}
-                          autoHeight={true}
-                          navigation
-                          pagination={{ clickable: true }}
-                        >
-                          <SwiperSlide>
-                            <ResumeEditor
-                              data={data}
-                              setData={setData}
-                              pdfFormat={pdfFormat}
-                              setPdfFormat={setPdfFormat}
-                              previewRef={previewRef}
-                            />
-                          </SwiperSlide>
-                          <SwiperSlide>
-                            <ResumePreview ref={previewRef} data={data} />
-                          </SwiperSlide>
-                        </Swiper>
-                      ) : (
-                        <ResumeEditor
-                          data={data}
-                          setData={setData}
-                          pdfFormat={pdfFormat}
-                          setPdfFormat={setPdfFormat}
-                          previewRef={previewRef}
-                        />
-                      )}
-                    </>
-                  }
-                />
-                <Route path="/resumes" element={<ResumeList />} />
-                <Route path="/templates" element={<Templates />} />
-                <Route path="/resumes/:id" element={<ResumeDetail />} />
-              </Routes>
-            </main>
-          </div>
-          {!isMobile && (
-            <div className="wrapper-preview">
-              <ResumePreview ref={previewRef} data={data} />
-            </div>
-          )}
+      <Header
+        toggleTheme={toggleTheme}
+        currentTheme={theme}
+        handlePreviewPDF={handlePreviewPDF}
+        handleExportPDF={handleExportPDF}
+        handleSave={handleSave}
+      />
+      <div className="app p-4">
+        <div className="wrapper-editor">
+          <main className="p-4">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    {isMobile ? (
+                      <Swiper
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={50}
+                        slidesPerView={1}
+                        autoHeight={true}
+                        navigation
+                        pagination={{ clickable: true }}
+                      >
+                        <SwiperSlide>
+                          <ResumeEditor
+                            data={data}
+                            setData={setData}
+                            pdfFormat={pdfFormat}
+                            setPdfFormat={setPdfFormat}
+                            previewRef={previewRef}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <ResumePreview ref={previewRef} data={data} />
+                        </SwiperSlide>
+                      </Swiper>
+                    ) : (
+                      <ResumeEditor
+                        data={data}
+                        setData={setData}
+                        pdfFormat={pdfFormat}
+                        setPdfFormat={setPdfFormat}
+                        previewRef={previewRef}
+                      />
+                    )}
+                  </>
+                }
+              />
+              <Route path="/resumes" element={<ResumeList />} />
+              <Route path="/templates" element={<Templates />} />
+              <Route path="/resumes/:id" element={<ResumeDetail />} />
+            </Routes>
+          </main>
         </div>
-      </Router>
+        {!isMobile && (
+          <div className="wrapper-preview">
+            <ResumePreview ref={previewRef} data={data} />
+          </div>
+        )}
+      </div>
     </main>
   );
 }
