@@ -592,6 +592,32 @@ h3 {
     display: none;
   }
 
+  .resume-preview {
+    padding: 0 20px;
+  }
+  
+  .swiper,
+  .swiper-slide {
+    height: auto !important;
+    box-sizing: border-box;
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 20px;
+    color: #007BFF;
+    top: 16%;
+    position: fixed;
+  }
+
+  .swiper-button-prev::after {
+    left: 6px;
+  }
+
+  .swiper-button-next::after {
+    right: 6px;
+  }
+
   .resume-divider {
     display: none;
   }

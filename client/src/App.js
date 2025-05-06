@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import html2pdf from "html2pdf.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -9,14 +9,17 @@ import ResumePreview from "./components/ResumePreview";
 import ResumeList from "./components/ResumeList";
 import Templates from "./components/Templates";
 import ResumeDetail from "./components/ResumeDetail";
-import MobileTabs from "./components/MobileTabs";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from "swiper/modules";
+import 'swiper/css';
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 function App() {
   const API_URL = process.env.REACT_APP_API_URL;
   const [theme, setTheme] = useState("light");
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState("editor");
-  const isMobile = window.innerWidth <= 768;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -35,7 +38,17 @@ function App() {
     setTheme(newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
   
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;
@@ -122,8 +135,15 @@ function App() {
                   element={
                     <>
                       {isMobile ? (
-                        <>
-                          {activeTab === "editor" && (
+                        <Swiper
+                          modules={[Navigation, Pagination]}
+                          spaceBetween={50}
+                          slidesPerView={1}
+                          autoHeight={true}
+                          navigation
+                          pagination={{ clickable: true }}
+                        >
+                          <SwiperSlide>
                             <ResumeEditor
                               data={data}
                               setData={setData}
@@ -131,12 +151,11 @@ function App() {
                               setPdfFormat={setPdfFormat}
                               previewRef={previewRef}
                             />
-                          )}
-                          {activeTab === "preview" && (
+                          </SwiperSlide>
+                          <SwiperSlide>
                             <ResumePreview ref={previewRef} data={data} />
-                          )}
-                          <MobileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                        </>
+                          </SwiperSlide>
+                        </Swiper>
                       ) : (
                         <ResumeEditor
                           data={data}
@@ -155,9 +174,11 @@ function App() {
               </Routes>
             </main>
           </div>
-          <div className="wrapper-preview">
-            <ResumePreview ref={previewRef} data={data} />
-          </div>
+          {!isMobile && (
+            <div className="wrapper-preview">
+              <ResumePreview ref={previewRef} data={data} />
+            </div>
+          )}
         </div>
       </Router>
     </main>
