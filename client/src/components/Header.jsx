@@ -50,7 +50,7 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
       </div>
 
       <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}>
-        <button onClick={toggleTheme} className="icon-button">
+        <button onClick={toggleTheme} className="theme-button">
           {currentTheme === "light" ? "🌙" : "☀️"}
         </button>
 
@@ -66,7 +66,7 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
           {t('save')}
         </button>
 
-        <button onClick={toggleLanguage} className="icon-button">
+        <button onClick={toggleLanguage} className="lang-button">
           {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
         </button>
       </div>
