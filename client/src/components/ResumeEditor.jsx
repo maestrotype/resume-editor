@@ -22,8 +22,6 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
 
   return (
     <div className="editor">
-      <h2 className="section-title">{t("editor")}</h2>
-
       <label>{t("name")}</label>
       <input
         type="text"

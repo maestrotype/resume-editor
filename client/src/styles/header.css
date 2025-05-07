@@ -33,6 +33,35 @@ header nav a:hover {
     text-decoration: underline;
 }
 
+.action-button {
+    margin: 0 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.action-button svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-primary);
+}
+
+.action-button:hover svg {
+    fill: var(--color-accent);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.custom-button {
+    display: flex;
+    align-items: center;
+}
+
 .sticky-header {
     position: sticky;
     top: 0;
@@ -126,10 +155,49 @@ header nav a:hover {
         flex-wrap: wrap;
     }
 
-    .lang-button, .theme-button {
+    .action-button {
+        margin: 0 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        position: relative;
+    }
+
+    .action-button svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--color-primary);
+    }
+
+    .action-button:hover svg {
+        fill: var(--color-accent);
+    }
+
+    .action-button:hover::after {
+        content: attr(title);
         position: absolute;
-        top: 10px;
-        right: 40px;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        padding: 4px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-button:hover::after {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .action-button::after {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s ease;
     }
 
     .theme-button {
