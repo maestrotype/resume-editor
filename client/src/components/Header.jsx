@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/header.css";
+import SVGIcon from "./SVGIcon";
 
 function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, handleSave }) {
   const { t, i18n } = useTranslation();
@@ -22,16 +23,16 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
         setMenuOpen(false);
       }
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);  
+  }, []);
 
   return (
     <header className="header sticky-header">
-      <div className="header-left">
+      <div className="header-logo">
         <Link to="/" className="logo">
-          ResumeEditor
+          ResumeGenerator
         </Link>
         <nav className={`nav ${menuOpen ? "open" : ""}`}>
           <Link to="/" className="nav-link">
@@ -49,24 +50,45 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
         </div>
       </div>
 
-      <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}>
-        <button onClick={toggleTheme} className="theme-button">
+      {/* <div className={`custom-button ${menuOpen ? 'hidden' : ''}`}> */}
+      <div className="custom-button">
+        <button
+          onClick={toggleTheme}
+          className="theme-button"
+          title={currentTheme === "light" ? t("darkMode") : t("lightMode")}
+        >
           {currentTheme === "light" ? "🌙" : "☀️"}
         </button>
 
-        <button onClick={handlePreviewPDF} className="button-primary" >
-          {t("previewPDF")}
+        <button
+          onClick={handlePreviewPDF}
+          className="action-button"
+          title={t("previewPDF")}
+        >
+          <SVGIcon name="preview" />
         </button>
 
-        <button onClick={handleExportPDF} className="action-button fixed-width">
-          {t('exportPDF')}
+        <button
+          onClick={handleExportPDF}
+          className="action-button"
+          title={t("exportPDF")}
+        >
+          <SVGIcon name="export" />
         </button>
 
-        <button onClick={handleSave} className="action-button fixed-width">
-          {t('save')}
+        <button
+          onClick={handleSave}
+          className="action-button"
+          title={t("save")}
+        >
+          <SVGIcon name="save" />
         </button>
 
-        <button onClick={toggleLanguage} className="lang-button">
+        <button
+          onClick={toggleLanguage}
+          className="lang-button"
+          title={i18n.language === "en" ? "Русский" : "English"}
+        >
           {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
         </button>
       </div>
