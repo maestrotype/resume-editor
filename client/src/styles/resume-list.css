@@ -12,11 +12,12 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1rem;
     padding: 1rem;
+    background-color: var(--color-bg);
   }
   
   .resume-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-input-border);
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -31,11 +32,11 @@
     font-size: 1.25rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: #212529;
+    color: var(--color-text);
   }
   
-  .resume-summary {
-    color: #6c757d;
+  .resume-list .resume-summary {
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
   
@@ -51,7 +52,7 @@
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    color: #fff;
+    color: var(--color-text);
   }
   
   .btn-view {

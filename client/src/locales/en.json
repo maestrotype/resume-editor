@@ -18,6 +18,8 @@
   "templates": "Templates",
   "exportPDF": "Export PDF",
   "save": "Save",
+  "view": "View",
+  "delete": "Delete",
   "resumeSaveSuccess": "Resume saved successfully!",
   "resumeSaveError": "Error saving resume. Please try again.",
   "resumeDeleteSuccess": "Resume deleted successfully!",

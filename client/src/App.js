@@ -102,11 +102,19 @@ function App() {
 
   const handleSave = async () => {
     try {
+      const isUpdate = !!data._id;
       const payload = { ...data };
-      delete payload._id;
   
-      const response = await fetch(`${API_URL}/resumes`, {
-        method: "POST",
+      const url = isUpdate
+        ? `${API_URL}/resumes/${data._id}`
+        : `${API_URL}/resumes`;
+  
+      const method = isUpdate ? "PUT" : "POST";
+  
+      if (isUpdate) delete payload._id;
+  
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -124,7 +132,8 @@ function App() {
       console.error("Save error:", error);
       alert("Failed to save resume. Please try again.");
     }
-  };  
+  };
+  
 
   return (
     <main className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>

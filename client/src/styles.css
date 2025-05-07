@@ -1,21 +1,25 @@
 :root {
   --color-bg: #f7f7f7;
   --color-text: #222;
+  --color-card: #f8f9fa;
   --color-placeholder: #222;
   --color-input-bg: #fff;
-  --color-input-border: #ccc;
+  --color-input-border: #dee2e6;
   --color-primary: #1976d2;
   --color-icon: #222;
+  --color-shadow: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
   --color-bg: #1c2423;
   --color-text: #e0e0e0;
+  --color-card: #333;
   --color-placeholder: #222;
   --color-input-bg: #1e1e1e;
-  --color-input-border: #333;
+  --color-input-border: #555;
   --color-primary: #90caf9;
   --color-icon: #e0e0e0;
+  --color-shadow: #333;
 }
 
 :root,
