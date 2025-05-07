@@ -18,14 +18,13 @@
   
   .wrapper-editor {
     flex: 1;
-    /* padding: 1rem; */
     overflow-y: auto;
   }
   
   .wrapper-preview {
     flex: 1;
     padding: 1rem;
-    background-color: var(--background-color);
+    background-color: var(--color-preview-bg);
     overflow-y: auto;
     border-left: 1px solid #ddd;
   }

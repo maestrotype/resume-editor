@@ -1,24 +1,2 @@
-.resume-layout {
-    max-width: 800px;
-    margin: auto;
-    padding: 0 10px;
-    background-color: white;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .resume-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .skills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  
-  .section {
-    margin-bottom: 1.5rem;
-  }
+
   
