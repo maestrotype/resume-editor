@@ -57,7 +57,7 @@ function ResumeList() {
           <h2 className="resume-title">{resume.name}</h2>
           <p className="resume-summary">{resume.summary?.slice(0, 80)}...</p>
           <div className="resume-actions">
-            <button onClick={() => handleView(resume)} className="btn">view</button>
+            <button onClick={() => handleView(resume)} className="btn">{t("view")}</button>
             <button
               onClick={() => handleDelete(resume._id)}
               className="btn btn-delete"

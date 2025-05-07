@@ -18,6 +18,8 @@
   "templates": "Шаблоны",
   "exportPDF": "Экспорт PDF",
   "save": "Сохранить",
+  "view": "Просмотр",
+  "delete": "Удалить",
   "resumeSaveSuccess": "Резюме успешно сохранено!",
   "resumeSaveError": "Ошибка при сохранении резюме. Пожалуйста, попробуйте снова.",
   "resumeDeleteSuccess": "Резюме успешно удалено!",
