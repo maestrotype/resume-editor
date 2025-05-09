@@ -1,9 +1,10 @@
 import React, { forwardRef } from "react";
 import ContactBlock from "./ContactBlock";
 
-const ResumePreview = forwardRef(({ data }, ref) => {
+const ResumePreview = forwardRef(({ data, template }, ref) => {
   return (
-    <div className="wrapper">
+    <div className={`wrapper template-${template}`}>
+      <h2>Preview for Template {template}</h2>
       <div className="resume-preview" ref={ref} id="resume-preview">
         <div className="top-bar">
           <span>{data.name}</span>
