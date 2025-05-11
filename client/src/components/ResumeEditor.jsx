@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
+function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
 
   const { t } = useTranslation();
-
-  // const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -21,7 +19,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, previewRef }) {
   }, [data]);
 
   return (
-    <div className="editor">
+    <div className={`editor template-${template}`}>
       <label>{t("name")}</label>
       <input
         type="text"

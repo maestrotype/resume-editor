@@ -21,6 +21,7 @@ function App() {
   const { t } = useTranslation();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [selectedTemplate, setSelectedTemplate] = useState(1);
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -56,7 +57,10 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
+  const handleTemplateSelect = (id) => {
+    setSelectedTemplate(id);
+  };
+  
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;
 
@@ -167,7 +171,7 @@ function App() {
                             setData={setData}
                             pdfFormat={pdfFormat}
                             setPdfFormat={setPdfFormat}
-                            previewRef={previewRef}
+                            template={selectedTemplate}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
@@ -180,21 +184,21 @@ function App() {
                         setData={setData}
                         pdfFormat={pdfFormat}
                         setPdfFormat={setPdfFormat}
-                        previewRef={previewRef}
+                        template={selectedTemplate}
                       />
                     )}
                   </>
                 }
               />
               <Route path="/resumes" element={<ResumeList />} />
-              <Route path="/templates" element={<Templates />} />
+              <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
               <Route path="/resumes/:id" element={<ResumeDetail />} />
             </Routes>
           </main>
         </div>
         {!isMobile && (
           <div className="wrapper-preview">
-            <ResumePreview ref={previewRef} data={data} />
+            <ResumePreview ref={previewRef} data={data} template={selectedTemplate} />
           </div>
         )}
       </div>
