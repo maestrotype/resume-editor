@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const templates = [
   { id: 1, name: 'Classic', description: 'A clean and professional resume template.', className: 'classic-template' },
