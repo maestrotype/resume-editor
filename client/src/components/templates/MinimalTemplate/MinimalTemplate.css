@@ -38,6 +38,10 @@
     object-fit: cover;
 }
 
+.template-minimal .contact-block {
+    flex-direction: column;
+}
+
 .sidebar ul {
     list-style: none;
     padding: 0;

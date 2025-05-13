@@ -1,12 +1,13 @@
 import React, { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
+import ContactBlock from "../../ContactBlock";
 import "./MinimalTemplate.css";
 
 const MinimalTemplate = forwardRef(({ data }, ref) => {
     const { t } = useTranslation();
 
     return (
-        <div className="template-minimal">
+        <div className="template-minimal" ref={ref} id="template-minimal">
             <div class="resume">
                 <aside class="sidebar">
                     <div class="avatar">
@@ -15,6 +16,7 @@ const MinimalTemplate = forwardRef(({ data }, ref) => {
                     <section class="personal-info">
                         <h2>{t("personal")}</h2>
                         <p><strong>{t("name")}</strong> {data.name}</p>
+                        <ContactBlock contacts={data.contacts} />
                         <p><strong>Адреса:</strong> вул. Наукова 15, 123, 01023 Київ</p>
                         <p><strong>Номер телефону:</strong> +380 325 15 25</p>
                         <p>example@gmail.com</p>
