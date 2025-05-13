@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import ContactBlock from "../ContactBlock";
+import ContactBlock from "../../ContactBlock";
 
 const ClassicTemplate = forwardRef(({ data }, ref) => {
     return (

@@ -10,8 +10,14 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === "en" ? "ru" : "en");
-  };
+    if (i18n.language === "en") {
+      i18n.changeLanguage("ru");
+    } else if (i18n.language === "ru") {
+      i18n.changeLanguage("ua");
+    } else {
+      i18n.changeLanguage("en");
+    }
+  };  
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -87,9 +93,19 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
         <button
           onClick={toggleLanguage}
           className="lang-button"
-          title={i18n.language === "en" ? "Русский" : "English"}
+          title={
+            i18n.language === "en"
+              ? "Русский"
+              : i18n.language === "ru"
+                ? "Українська"
+                : "English"
+          }
         >
-          {i18n.language === "en" ? "🇷🇺" : "🇺🇸"}
+          {i18n.language === "en"
+            ? "🇷🇺"
+            : i18n.language === "ru"
+              ? "🇺🇦"
+              : "🇺🇸"}
         </button>
       </div>
     </header>
