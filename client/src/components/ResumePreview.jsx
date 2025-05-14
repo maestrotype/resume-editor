@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
-import ClassicTemplate from "./templates/ClassicTemplate";
-import ModernTemplate from "./templates/ModernTemplate";
-import MinimalTemplate from "./templates/MinimalTemplate";
+import ClassicTemplate from "./templates/ClassicTemplate/ClassicTemplate";
+import ModernTemplate from "./templates/ModernTemplate/ModernTemplate";
+import MinimalTemplate from "./templates/MinimalTemplate/MinimalTemplate";
 
 
 const ResumePreview = forwardRef(({ data, template }, ref) => {
@@ -20,8 +20,7 @@ const ResumePreview = forwardRef(({ data, template }, ref) => {
   };
 
   return (
-    <div className={`wrapper template-${template}`}>
-      <h2>Preview for Template {template}</h2>
+    <div className="wrapper">
       <div className="resume-preview">
         {renderTemplate()}
       </div>

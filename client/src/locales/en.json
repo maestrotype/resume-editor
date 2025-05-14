@@ -3,6 +3,7 @@
   "name": "Name",
   "title": "Title",
   "position": "Position",
+  "personal": "Personal",
   "summary": "Summary",
   "skills": "Skills (comma separated)",
   "experience": "Experience",
