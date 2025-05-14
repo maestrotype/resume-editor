@@ -23,7 +23,6 @@
   
   .wrapper-preview {
     flex: 1;
-    padding: 1rem;
     background-color: var(--color-preview-bg);
     overflow-y: auto;
     border-left: 1px solid #ddd;

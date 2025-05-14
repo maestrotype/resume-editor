@@ -324,6 +324,7 @@ h3 {
   align-items: flex-start;
   gap: 20px;
   flex-wrap: wrap;
+  padding: 15px;
 }
 
 .resume-header__info {
@@ -356,7 +357,7 @@ h3 {
 }
 
 .resume-summary {
-  margin-bottom: 10px;
+  padding: 15px;
   line-height: 1.6;
   font-size: 14px;
   text-align: left;
@@ -388,7 +389,6 @@ h3 {
 
 .resume-header {
   text-align: center;
-  margin-bottom: 2rem;
 }
 
 .skills-list {
@@ -449,13 +449,13 @@ h3 {
 }
 
 .resume-divider {
-  width: 3px;
+  width: 2px;
   background-color: #333;
-  margin-top: 20px;
-  margin-bottom: 0;
-  height: calc(100% - 51px);
+  margin: 20px 10px 0 10px;
+  height: calc(100% - 20px);
   position: absolute;
   left: 50%;
+  bottom: 0;
 }
 
 .experience-content {
@@ -605,12 +605,6 @@ h3 {
   .editor,
   .preview-wrapper {
     padding-bottom: 60px;
-  }
-
-  .resume-header__top {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
   }
 
   .resume-header__info h1,
