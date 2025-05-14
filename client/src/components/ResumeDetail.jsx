@@ -5,7 +5,23 @@ import "../styles/resume-detail.css";
 function ResumeDetail() {
   const { id } = useParams();
   const [resume, setResume] = useState(null);
+
+  async function getResume(id) {
+    try {
+      const response = await fetch(`/api/resumes/${id}`);
+      const resumeData = await response.json();
+      setResume(resumeData);
+      console.log("Resume data loaded:", resumeData);
+    } catch (error) {
+      console.error("Ошибка загрузки резюме:", error);
+    }
+  }
+
   const API_URL = process.env.REACT_APP_API_URL || "/api";
+
+  useEffect(() => {
+    if (id) getResume(id);
+  }, [id]);
 
   useEffect(() => {
     fetch(`${API_URL}/resumes/${id}`)
@@ -22,7 +38,11 @@ function ResumeDetail() {
     <div className="resume-detail">
       <h1 className="resume-detail__name">{resume.name}</h1>
       <p className="resume-detail__title">{resume.title}</p>
-
+      {resume.avatar ? (
+        <img src={resume.avatar} alt="Avatar" className="resume-avatar" />
+      ) : (
+        <div className="resume-avatar placeholder">Аватарка отсутствует</div>
+      )}
       <h2 className="resume-detail__section-title">Summary</h2>
       <p className="resume-detail__text">{resume.summary}</p>
 

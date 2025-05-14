@@ -15,6 +15,7 @@ app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
+app.use("/uploads", express.static("uploads"));
 app.use("/api", resumeRoutes);
 
 app.listen(PORT, () => {

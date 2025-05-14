@@ -8,6 +8,7 @@ const ResumeSchema = new mongoose.Schema({
   experience: String,
   education: String,
   contacts: String,
+  avatar: String, 
   createdAt: {
     type: Date,
     default: Date.now
