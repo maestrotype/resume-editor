@@ -4,6 +4,11 @@
     background-color: #f4f4f4;
 }
 
+.template-minimal .skills-list .skill-item, 
+.template-minimal .skills-list .skill-heading {
+    color: #f2f2f2;;
+}
+
 .resume {
     display: flex;
     max-width: 1200px;
@@ -41,6 +46,12 @@
 
 .template-minimal .contact-block {
     flex-direction: column;
+    margin: 10px;
+}
+
+.template-minimal .contact-block .contact-line span{
+    display: flex;
+    align-items: center;
 }
 
 .sidebar ul {
@@ -55,6 +66,8 @@
 .sidebar p {
     margin: 4px 0;
 }
+
+.contact-block 
 
 .content {
     padding: 30px;
