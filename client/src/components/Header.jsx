@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ProfileMenu from "../modules/auth/components/ProfileMenu";
 import "../styles/header.css";
 import SVGIcon from "./SVGIcon";
 
@@ -107,6 +108,7 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
               ? "🇺🇦"
               : "🇺🇸"}
         </button>
+        <ProfileMenu />
       </div>
     </header>
   );

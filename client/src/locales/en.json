@@ -24,5 +24,19 @@
   "resumeSaveSuccess": "Resume saved successfully!",
   "resumeSaveError": "Error saving resume. Please try again.",
   "resumeDeleteSuccess": "Resume deleted successfully!",
-  "resumeDeleteError": "Error deleting resume. Please try again."
+  "resumeDeleteError": "Error deleting resume. Please try again.",
+
+  "username": "Username",
+  "password": "Password",
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+  "login_success": "Login successful!",
+  "register_success": "Registration successful!",
+  "login_failed": "Login failed. Please try again.",
+  "register_failed": "Registration failed. Please try again.",
+  "auth_error": "Authorization error",
+  "server_error": "Server error. Please try again later.",
+  "profile": "Profile",
+  "welcome_message": "Welcome, {username}!"
 }

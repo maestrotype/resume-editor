@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import html2pdf from "html2pdf.js";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
+import { AuthProvider } from "./modules/auth/context/AuthContext";
+import AuthRoutes from "./modules/auth/routes";
 import ResumeEditor from "./components/ResumeEditor";
 import ResumePreview from "./components/ResumePreview";
 import ResumeList from "./components/ResumeList";
@@ -11,6 +13,7 @@ import Templates from "./components/Templates";
 import ResumeDetail from "./components/ResumeDetail";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
+import 'antd/dist/reset.css';
 import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -60,7 +63,7 @@ function App() {
   const handleTemplateSelect = (id) => {
     setSelectedTemplate(id);
   };
-  
+
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;
 
@@ -108,15 +111,15 @@ function App() {
     try {
       const isUpdate = !!data._id;
       const payload = { ...data };
-  
+
       const url = isUpdate
         ? `${API_URL}/resumes/${data._id}`
         : `${API_URL}/resumes`;
-  
+
       const method = isUpdate ? "PUT" : "POST";
-  
+
       if (isUpdate) delete payload._id;
-  
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -124,11 +127,11 @@ function App() {
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to save resume");
       }
-  
+
       const result = await response.json();
       console.log("Resume saved:", result);
       alert("Resume saved successfully!");
@@ -137,71 +140,74 @@ function App() {
       alert("Failed to save resume. Please try again.");
     }
   };
-  
+
 
   return (
     <main className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>
-      <Header
-        toggleTheme={toggleTheme}
-        currentTheme={theme}
-        handlePreviewPDF={handlePreviewPDF}
-        handleExportPDF={handleExportPDF}
-        handleSave={handleSave}
-      />
-      <div className="app p-4">
-        <div className="wrapper-editor">
-          <main className="p-4">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    {isMobile ? (
-                      <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={50}
-                        slidesPerView={1}
-                        autoHeight={true}
-                        navigation
-                        pagination={{ clickable: true }}
-                      >
-                        <SwiperSlide>
-                          <ResumeEditor
-                            data={data}
-                            setData={setData}
-                            pdfFormat={pdfFormat}
-                            setPdfFormat={setPdfFormat}
-                            template={selectedTemplate}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <ResumePreview ref={previewRef} data={data} />
-                        </SwiperSlide>
-                      </Swiper>
-                    ) : (
-                      <ResumeEditor
-                        data={data}
-                        setData={setData}
-                        pdfFormat={pdfFormat}
-                        setPdfFormat={setPdfFormat}
-                        template={selectedTemplate}
-                      />
-                    )}
-                  </>
-                }
-              />
-              <Route path="/resumes" element={<ResumeList />} />
-              <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
-              <Route path="/resumes/:id" element={<ResumeDetail />} />
-            </Routes>
-          </main>
-        </div>
-        {!isMobile && (
-          <div className="wrapper-preview">
-            <ResumePreview ref={previewRef} data={data} template={selectedTemplate} />
+      <AuthProvider>
+        <Header
+          toggleTheme={toggleTheme}
+          currentTheme={theme}
+          handlePreviewPDF={handlePreviewPDF}
+          handleExportPDF={handleExportPDF}
+          handleSave={handleSave}
+        />
+        <div className="app p-4">
+          <div className="wrapper-editor">
+            <main className="p-4">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      {isMobile ? (
+                        <Swiper
+                          modules={[Navigation, Pagination]}
+                          spaceBetween={50}
+                          slidesPerView={1}
+                          autoHeight={true}
+                          navigation
+                          pagination={{ clickable: true }}
+                        >
+                          <SwiperSlide>
+                            <ResumeEditor
+                              data={data}
+                              setData={setData}
+                              pdfFormat={pdfFormat}
+                              setPdfFormat={setPdfFormat}
+                              template={selectedTemplate}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <ResumePreview ref={previewRef} data={data} />
+                          </SwiperSlide>
+                        </Swiper>
+                      ) : (
+                        <ResumeEditor
+                          data={data}
+                          setData={setData}
+                          pdfFormat={pdfFormat}
+                          setPdfFormat={setPdfFormat}
+                          template={selectedTemplate}
+                        />
+                      )}
+                    </>
+                  }
+                />
+                {AuthRoutes()}
+                <Route path="/resumes" element={<ResumeList />} />
+                <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
+                <Route path="/resumes/:id" element={<ResumeDetail />} />
+              </Routes>
+            </main>
           </div>
-        )}
-      </div>
+          {!isMobile && (
+            <div className="wrapper-preview">
+              <ResumePreview ref={previewRef} data={data} template={selectedTemplate} />
+            </div>
+          )}
+        </div>
+      </AuthProvider>
     </main>
   );
 }
