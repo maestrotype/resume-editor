@@ -3,8 +3,6 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export const login = async (username, password) => {
 
-    console.log("API URL:", API_URL);
-
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,14 +18,16 @@ export const login = async (username, password) => {
 
   const data = await response.json();
   localStorage.setItem("token", data.token);
+  localStorage.setItem("avatar", data.avatar);
   return data;
 };
 
-export const register = async (username, password) => {
+export const register = async (formData) => {
+    console.log("formData", formData);
+    
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: formData,
   });
 
   if (!response.ok) {
@@ -43,4 +43,5 @@ export const register = async (username, password) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("avatar");
 };
