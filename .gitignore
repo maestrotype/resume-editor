@@ -9,6 +9,7 @@ node_modules/
 # Server
 /server/node_modules/
 /server/db.json  # если временная база
+/server/uploads/avatars/  # uploaded user avatars
 
 # Logs
 npm-debug.log*

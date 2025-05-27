@@ -2,11 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
-
   const { t } = useTranslation();
+  const [fileKey, setFileKey] = useState(Date.now()); // Add key for controlled file input
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setData(prev => ({ ...prev, avatar: reader.result }));
+        setFileKey(Date.now()); // Reset file input after successful upload
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   useEffect(() => {
@@ -25,7 +37,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         type="text"
         name="name"
         placeholder={t("name")}
-        value={data.name}
+        value={data.name || ""}
         onChange={handleChange}
       />
 
@@ -34,7 +46,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         type="text"
         name="title"
         placeholder={t("title")}
-        value={data.title}
+        value={data.title || ""}
         onChange={handleChange}
       />
 
@@ -43,7 +55,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         type="text"
         name="position"
         placeholder={t("position")}
-        value={data.position}
+        value={data.position || ""}
         onChange={handleChange}
       />
 
@@ -51,7 +63,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
       <textarea
         name="summary"
         placeholder={t("summary")}
-        value={data.summary}
+        value={data.summary || ""}
         onChange={(e) => {
           handleChange(e);
           e.target.style.height = "auto";
@@ -59,13 +71,12 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         }}
         rows="3"
       />
-
 
       <label>{t("skills")}</label>
       <textarea
         name="skills"
         placeholder={t("skills")}
-        value={data.skills}
+        value={data.skills || ""}
         onChange={(e) => {
           handleChange(e);
           e.target.style.height = "auto";
@@ -73,13 +84,12 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         }}
         rows="3"
       />
-
 
       <label>{t("experience")}</label>
       <textarea
         name="experience"
         placeholder={t("experience")}
-        value={data.experience}
+        value={data.experience || ""}
         onChange={(e) => {
           handleChange(e);
           e.target.style.height = "auto";
@@ -87,12 +97,13 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         }}
         rows="3"
       />
+
       <div className="form-group">
         <label>{t("education")}</label>
         <textarea
           name="education"
           placeholder={t("education")}
-          value={data.education}
+          value={data.education || ""}
           onChange={(e) => {
             handleChange(e);
             e.target.style.height = "auto";
@@ -107,7 +118,7 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         <textarea
           name="contacts"
           placeholder={t("contacts")}
-          value={data.contacts}
+          value={data.contacts || ""}
           onChange={(e) => {
             handleChange(e);
             e.target.style.height = "auto";
@@ -120,23 +131,19 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
       <label className="file-label">
         📎 {t("avatar")}
         <input
+          key={fileKey}
           type="file"
           accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                setData((prev) => ({ ...prev, avatar: reader.result }));
-              };
-              reader.readAsDataURL(file);
-            }
-          }}
+          onChange={handleFileChange}
         />
       </label>
+
       <div className="form-section">
         <label>{t("pdfFormat")}</label>
-        <select value={pdfFormat} onChange={(e) => setPdfFormat(e.target.value)}>
+        <select 
+          value={pdfFormat || "a4"} 
+          onChange={(e) => setPdfFormat(e.target.value)}
+        >
           <option value="a4">A4</option>
           <option value="a3">A3</option>
           <option value="letter">Letter</option>

@@ -3,43 +3,38 @@ import { Form, Input, Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// Use value from .env.development
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000/api";
 
 const AuthForm = ({ isLogin }) => {
   const { t } = useTranslation();
   const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(null);
 
-  const handleAvatarChange = async (info) => {
-    const formData = new FormData();
-    formData.append("avatar", info.file.originFileObj);
-
-    try {
-      const res = await fetch(`${API_URL}/api/avatar`, {
-        method: "POST",
-        body: formData,
-      });
-
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Invalid content type");
+  const handleAvatarChange = (info) => {
+    if (info.file.status === 'done') {
+      if (info.file.response.success) {
+        setAvatar(info.file.response.avatarPath);
+        message.success(t("avatar_upload_success"));
+      } else {
+        message.error(info.file.response.message || t("avatar_upload_error"));
       }
-
-      const data = await res.json();
-      setAvatar(data.avatarPath);
-      console.log("Аватар успешно загружен:", data.avatarPath);
-    } catch (error) {
-      console.error("Ошибка при загрузке аватара", error);
-      message.error("Не удалось загрузить аватар");
+    } else if (info.file.status === 'error') {
+      message.error(t("avatar_upload_error"));
     }
   };
 
   const onFinish = async (values) => {
     setLoading(true);
+    
     try {
-      const res = await fetch(`${API_URL}/api/register`, {
+      const endpoint = isLogin ? 'login' : 'register';
+      
+      const response = await fetch(`${API_URL}/auth/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,16 +42,28 @@ const AuthForm = ({ isLogin }) => {
         body: JSON.stringify({
           username: values.username,
           password: values.password,
-          avatar,
+          ...(avatar ? { avatar } : {})
         }),
       });
 
-      const data = await res.json();
-      message.success("Успешная регистрация!");
-      console.log("Регистрация:", data);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || t("auth_error"));
+      }
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        const userData = {
+          username: values.username,
+          avatar: data.avatar
+        };
+        setUser(userData);
+        message.success(isLogin ? t("login_success") : t("register_success"));
+        navigate("/");
+      }
     } catch (err) {
-      console.error("Ошибка регистрации:", err);
-      message.error("Ошибка при регистрации");
+      message.error(err.message || t("auth_error"));
     } finally {
       setLoading(false);
     }
@@ -64,37 +71,37 @@ const AuthForm = ({ isLogin }) => {
 
   return (
     <Form onFinish={onFinish} layout="vertical">
-      <Form.Item label={t("username")} name="username" rules={[{ required: true }]}>
+      <Form.Item 
+        label={t("username")}
+        name="username" 
+        rules={[{ required: true, message: t("username_required") }]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item label={t("password")} name="password" rules={[{ required: true }]}>
+      
+      <Form.Item 
+        label={t("password")}
+        name="password" 
+        rules={[{ required: true, message: t("password_required") }]}
+      >
         <Input.Password />
       </Form.Item>
+
       {!isLogin && (
-        <Form.Item label={t("avatar")} name="avatar">
+        <Form.Item label={t("avatar")}>
           <Upload
             name="avatar"
-            listType="picture"
-            beforeUpload={() => false}
+            action={`${API_URL}/upload/avatar`}
             onChange={handleAvatarChange}
-            fileList={
-              avatar
-                ? [
-                    {
-                      uid: "-1",
-                      name: avatar.split("/").pop(),
-                      status: "done",
-                      url: `${API_URL}${avatar}`,
-                    },
-                  ]
-                : []
-            }
             maxCount={1}
+            accept="image/*"
+            showUploadList={{ showPreviewIcon: true, showRemoveIcon: true }}
           >
             <Button icon={<UploadOutlined />}>{t("upload_avatar")}</Button>
           </Upload>
         </Form.Item>
       )}
+
       <Button type="primary" htmlType="submit" loading={loading} block>
         {isLogin ? t("login") : t("register")}
       </Button>
