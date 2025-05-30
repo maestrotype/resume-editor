@@ -12,19 +12,38 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const decoded = jwtDecode(token);
-      setUser(decoded);
+      try {
+        const decoded = jwtDecode(token);
+        console.log('[AuthContext] Decoded token:', decoded);
+        if (decoded) {
+          const userData = {
+            username: decoded.username,
+            avatar: decoded.avatar
+          };
+          console.log('[AuthContext] Setting user data from token:', userData);
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error('[AuthContext] Error decoding token:', error);
+        localStorage.removeItem("token");
+      }
     }
   }, []);
 
+  const setUserAndPersist = (userData) => {
+    console.log('[AuthContext] Setting user data:', userData);
+    setUser(userData);
+  };
+
   const logout = () => {
+    console.log('[AuthContext] Logging out user');
     logoutService();
     setUser(null);
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ user, setUser: setUserAndPersist, logout }}>
       {children}
     </AuthContext.Provider>
   );
