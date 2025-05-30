@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react";
 import "./ModernTemplate.css";
 
-
 const ModernTemplate = forwardRef(({ data }, ref) => {
     return (
         <div className="template-modern" ref={ref} id="resume-preview">
@@ -21,40 +20,27 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                     </div>
                 </div>
                 <div className="header-right">
-                    <h2 className="summary-title">Особисті дані</h2>
+                    <h2 className="summary-title">Summary</h2>
                     <p className="summary-text">{data.summary}</p>
                 </div>
             </div>
 
             <div className="modern-content">
-                <div className="main-content">
-                    <section className="section work-experience">
-                        <h2>Досвід роботи</h2>
-                        <div className="experience-content" dangerouslySetInnerHTML={{ __html: data.experience }} />
+                <main className="modern-main">
+                    <section className="experience">
+                        <h2>Experience</h2>
+                        <div className="content-text">{data.experience}</div>
                     </section>
 
-                    <section className="section education">
-                        <h2>Освіта і кваліфікації</h2>
-                        <p>{data.education}</p>
+                    <section className="education">
+                        <h2>Education</h2>
+                        <div className="content-text">{data.education}</div>
                     </section>
-
-                    <section className="section recommendations">
-                        <h2>Рекомендації</h2>
-                        <p>{data.recommendations || "Рекомендації надаються за запитом."}</p>
-                    </section>
-                </div>
+                </main>
 
                 <aside className="modern-sidebar">
-                    <div className="sidebar-section personal-details">
-                        <h3>Особисті дані</h3>
-                        <p>Ім’я: {data.name}</p>
-                        <p>Адреса: {data.address}</p>
-                        <p>Телефон: {data.phone}</p>
-                        <p>Email: {data.email}</p>
-                    </div>
-
                     <div className="sidebar-section skills">
-                        <h3>Навички</h3>
+                        <h3>Skills</h3>
                         <ul>
                             {data.skills
                                 .split("\n")
@@ -66,12 +52,12 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                     </div>
 
                     <div className="sidebar-section interests">
-                        <h3>Інтереси</h3>
+                        <h3>Interests</h3>
                         <p>{data.interests}</p>
                     </div>
 
                     <div className="sidebar-section languages">
-                        <h3>Мови</h3>
+                        <h3>Languages</h3>
                         <p>{data.languages}</p>
                     </div>
                 </aside>

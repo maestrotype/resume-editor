@@ -16,6 +16,7 @@ const AuthForm = ({ isLogin }) => {
   const [avatar, setAvatar] = useState(null);
 
   const handleAvatarChange = (info) => {
+
     if (info.file.status === 'done') {
       if (info.file.response.success) {
         setAvatar(info.file.response.avatarPath);

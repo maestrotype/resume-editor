@@ -4,17 +4,14 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import useAuth from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000/api";
+// Используем базовый URL без /api
+const BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:4000").replace('/api', '');
 
 const ProfileMenu = () => {
     const { t } = useTranslation();
     const { user, logout } = useAuth();
 
-    const getAvatarUrl = (avatarPath) => {
-        if (!avatarPath) return null;
-        if (avatarPath.startsWith('http')) return avatarPath;
-        return `${API_URL}${avatarPath.replace('/api', '')}`;
-    };
+    console.log('[ProfileMenu] Current user data:', user);
 
     const menu = (
         <Menu>
@@ -40,13 +37,18 @@ const ProfileMenu = () => {
         </Menu>
     );
 
+    // Формируем URL аватара, убирая /api из пути
+    const avatarUrl = user?.avatar ? `${BASE_URL}${user.avatar.replace('/api', '')}` : null;
+    console.log('[ProfileMenu] Avatar URL:', avatarUrl);
+
     return (
         <Dropdown overlay={menu} trigger={["click"]}>
-            {user?.avatar ? (
-                <Avatar src={getAvatarUrl(user.avatar)} className="avatar" />
-            ) : (
-                <Avatar icon={<UserOutlined />} className="avatar" />
-            )}
+            <Avatar 
+                size={32}
+                icon={!avatarUrl && <UserOutlined />}
+                src={avatarUrl}
+                style={{ cursor: 'pointer' }}
+            />
         </Dropdown>
     );
 };

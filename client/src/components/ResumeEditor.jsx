@@ -1,23 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import fileService from "../modules/files/services/fileService";
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
   const { t } = useTranslation();
-  const [fileKey, setFileKey] = useState(Date.now()); // Add key for controlled file input
+  const [fileKey, setFileKey] = useState(Date.now());
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setData(prev => ({ ...prev, avatar: reader.result }));
+      try {
+        // First convert to base64 for preview
+        const base64 = await fileService.fileToBase64(file);
+        
+        // Upload to server
+        const response = await fileService.uploadAvatar(file);
+        if (response.success) {
+          // Use server path for storage, but base64 for immediate preview
+          setData(prev => ({ 
+            ...prev, 
+            avatar: response.avatarPath,
+            avatarPreview: base64 // Use for immediate preview
+          }));
+        }
+        
         setFileKey(Date.now()); // Reset file input after successful upload
-      };
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('File handling error:', error);
+      }
     }
   };
 
@@ -31,72 +45,84 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
   }, [data]);
 
   return (
-    <div className={`editor template-${template}`}>
-      <label>{t("name")}</label>
-      <input
-        type="text"
-        name="name"
-        placeholder={t("name")}
-        value={data.name || ""}
-        onChange={handleChange}
-      />
+    <div className="editor">
+      <div className="form-group">
+        <label>{t("name")}</label>
+        <input
+          type="text"
+          name="name"
+          placeholder={t("name")}
+          value={data.name || ""}
+          onChange={handleChange}
+        />
+      </div>
 
-      <label>{t("title")}</label>
-      <input
-        type="text"
-        name="title"
-        placeholder={t("title")}
-        value={data.title || ""}
-        onChange={handleChange}
-      />
+      <div className="form-group">
+        <label>{t("title")}</label>
+        <input
+          type="text"
+          name="title"
+          placeholder={t("title")}
+          value={data.title || ""}
+          onChange={handleChange}
+        />
+      </div>
 
-      <label>{t("position")}</label>
-      <input
-        type="text"
-        name="position"
-        placeholder={t("position")}
-        value={data.position || ""}
-        onChange={handleChange}
-      />
+      <div className="form-group">
+        <label>{t("position")}</label>
+        <input
+          type="text"
+          name="position"
+          placeholder={t("position")}
+          value={data.position || ""}
+          onChange={handleChange}
+        />
+      </div>
 
-      <label>{t("summary")}</label>
-      <textarea
-        name="summary"
-        placeholder={t("summary")}
-        value={data.summary || ""}
-        onChange={(e) => {
-          handleChange(e);
-          e.target.style.height = "auto";
-          e.target.style.height = `${e.target.scrollHeight}px`;
-        }}
-        rows="3"
-      />
+      <div className="form-group">
+        <label>{t("summary")}</label>
+        <textarea
+          name="summary"
+          placeholder={t("summary")}
+          value={data.summary || ""}
+          onChange={(e) => {
+            handleChange(e);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+          }}
+          rows="3"
+        />
+      </div>
 
-      <label>{t("skills")}</label>
-      <textarea
-        name="skills"
-        placeholder={t("skills")}
-        value={data.skills || ""}
-        onChange={(e) => {
-          handleChange(e);
-          e.target.style.height = "auto";
-          e.target.style.height = `${e.target.scrollHeight}px`;
-        }}
-        rows="3"
-      />
+      <div className="form-group">
+        <label>{t("skills")}</label>
+        <textarea
+          name="skills"
+          placeholder={t("skills")}
+          value={data.skills || ""}
+          onChange={(e) => {
+            handleChange(e);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+          }}
+          rows="3"
+        />
+      </div>
 
-      <label>{t("experience")}</label>
-      <textarea
-        name="experience"
-        placeholder={t("experience")}
-        value={data.experience || ""}
-        onChange={(e) => {
-          handleChange(e);
-          e.target.style.height = "auto";
-          e.target.style.height = `${e.target.scrollHeight}px`;
-        }}
-        rows="3"
-      />
+      <div className="form-group">
+        <label>{t("experience")}</label>
+        <textarea
+          name="experience"
+          placeholder={t("experience")}
+          value={data.experience || ""}
+          onChange={(e) => {
+            handleChange(e);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+          }}
+          rows="3"
+        />
+      </div>
 
       <div className="form-group">
         <label>{t("education")}</label>

@@ -1,19 +1,16 @@
 const express = require("express");
 const multer = require("multer");
-const path = require("path");
+const fileService = require("../src/services/file.service");
 
 const router = express.Router();
 
-// Configure upload path
-const uploadPath = path.join(__dirname, "../../uploads/avatars");
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadPath);
+    cb(null, fileService.avatarsDir);
   },
   filename: (req, file, cb) => {
-    const uniqueName = `avatar-${Date.now()}${path.extname(file.originalname)}`;
-    cb(null, uniqueName);
+    const filename = fileService.generateAvatarFilename(file.originalname);
+    cb(null, filename);
   }
 });
 
@@ -21,7 +18,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.startsWith('image/')) {
+    if (!fileService.isImageFile(file.mimetype)) {
       console.error("Invalid file type:", file.mimetype);
       return cb(new Error('Only image files are allowed'), false);
     }
@@ -39,15 +36,14 @@ router.post("/avatar", upload.single("avatar"), (req, res) => {
       });
     }
 
-    // Generate path for database storage and client response
-    const avatarPath = `/api/uploads/avatars/${req.file.filename}`;
+    // Получаем путь для сохранения в БД
+    const avatarPath = fileService.getAvatarDbPath(req.file.filename);
     
-    // Log full file information for debugging avatar issues
     console.log("[Avatar Upload] Success:", {
       filename: req.file.filename,
       originalName: req.file.originalname,
       savedTo: req.file.path,
-      publicPath: avatarPath,
+      dbPath: avatarPath,
       size: req.file.size,
       mimetype: req.file.mimetype
     });
