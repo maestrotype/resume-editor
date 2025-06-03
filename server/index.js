@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const config = require('./src/config/app.config');
+const corsConfig = require('./src/config/cors.config');
 const { errorLogger, errorHandler, notFound } = require('./src/middleware/error.middleware');
 const authRoutes = require("./routes/auth.routes");
 const uploadRoutes = require("./routes/upload.routes");
@@ -22,13 +23,7 @@ if (!MONGODB_URI) {
 console.log('[Init] Starting server initialization...');
 
 // Middleware
-app.use(cors({
-  origin: [
-    'https://resume-editor-lxup.onrender.com',
-    'http://localhost:3000'
-  ],
-  credentials: true
-}));
+app.use(cors(corsConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
