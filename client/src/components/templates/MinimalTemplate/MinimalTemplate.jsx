@@ -10,8 +10,21 @@ const MinimalTemplate = forwardRef(({ data }, ref) => {
         <div className="template-minimal" ref={ref} id="template-minimal">
             <div class="resume">
                 <aside class="sidebar">
-                    <div class="avatar">
-                        <img src={data.avatar} alt="img" class="avatar-img" />
+                    <div className="avatar">
+                        <div
+                            className="avatar-img"
+                            style={{
+                                backgroundImage: `url(${data.avatar})`,
+                                width: '120px',
+                                height: '120px',
+                                borderRadius: '50%',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                display: 'block',
+                                margin: '0 auto',
+                            }}
+                        ></div>
                     </div>
                     <section class="personal-info">
                         <h2>{t("personal")}</h2>
@@ -34,22 +47,54 @@ const MinimalTemplate = forwardRef(({ data }, ref) => {
                                 )}
                         </div>
                     </section>
+                    <section class="education">
+                        <h2>{t("education")}</h2>
+                        <p>{data.education}</p>
+                    </section>
                 </aside>
-
                 <main class="content">
                     <header class="header">
                         <h1>{data.name}</h1>
                         <h2 className="resume-header__position">{data.position}</h2>
                     </header>
-
-                    <section class="experience">
-                        <h2>{t("experience")}</h2>
+                    <section class="summary">
+                        <h2>{t("summary")}</h2>
                         <div className="resume-summary">{data.summary}</div>
                     </section>
+                    <section class="experience">
+                        <h2>{t("experience")}</h2>
+                        <div className="resume-experience">
+                            {data.experience
+                                .trim()
+                                .split('\n')
+                                .reduce((acc, line) => {
+                                    const trimmed = line.trim();
+                                    const isHeader = /^[A-Z][^\n]+\([^)]+\)$/.test(trimmed);
+                                    if (isHeader || acc.length === 0) {
+                                        acc.push([trimmed]);
+                                    } else {
+                                        acc[acc.length - 1].push(trimmed);
+                                    }
+                                    return acc;
+                                }, [])
+                                .map((lines, idx) => {
+                                    const filtered = lines.filter(l => l !== '');
+                                    if (filtered.length < 4) return null;
 
-                    <section class="education">
-                        <h2>{t("education")}</h2>
-                        <p>{data.education}</p>
+                                    const [company, period, location, ...desc] = filtered;
+
+                                    return (
+                                        <div key={idx} style={{ marginBottom: '1.5em' }}>
+                                            <strong>{company}</strong><br />
+                                            <em>{period}</em><br />
+                                            <span>({location})</span>
+                                            <p style={{ marginTop: '0.5em' }}>
+                                                {desc.join(' ').replace(/\s+/g, ' ').trim()}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
+                        </div>
                     </section>
                 </main>
             </div>

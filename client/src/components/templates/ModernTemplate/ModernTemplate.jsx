@@ -11,30 +11,33 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                             <img src={data.avatar} alt="Avatar" className="avatar-img" />
                         </div>
                     )}
+                </div>
+                <div className="header-right">
                     <div className="personal-info">
                         <h1 className="name">{data.name}</h1>
                         <h3 className="position">{data.position}</h3>
+                        <h2>Education</h2>
+                        <div className="content-text">{data.education}</div>
                         <div className="contact-info">
                             <p>{data.contacts}</p>
                         </div>
                     </div>
                 </div>
-                <div className="header-right">
-                    <h2 className="summary-title">Summary</h2>
-                    <p className="summary-text">{data.summary}</p>
-                </div>
             </div>
 
             <div className="modern-content">
                 <main className="modern-main">
+                    <section className="summary">
+                        <h2 className="summary-title">Summary</h2>
+                        <p className="summary-text">{data.summary}</p>
+                    </section>
                     <section className="experience">
                         <h2>Experience</h2>
                         <div className="content-text">{data.experience}</div>
                     </section>
 
                     <section className="education">
-                        <h2>Education</h2>
-                        <div className="content-text">{data.education}</div>
+                        
                     </section>
                 </main>
 
