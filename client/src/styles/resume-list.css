@@ -14,7 +14,12 @@
     padding: 1rem;
     background-color: var(--color-bg);
   }
-  
+
+  .resume-list .resume-position{
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: bold;
+  }
   .resume-card {
     background-color: var(--color-card);
     border: 1px solid var(--color-input-border);
@@ -28,9 +33,9 @@
     transform: translateY(-2px);
   }
   
-  .resume-title {
+  .resume-list .resume-title {
     font-size: 1.25rem;
-    font-weight: bold;
+    text-transform: capitalize;
     margin-bottom: 0.5rem;
     color: var(--color-text);
   }
