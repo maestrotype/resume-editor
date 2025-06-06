@@ -109,16 +109,17 @@ function App() {
 
   const handleSave = async () => {
     try {
-      const isUpdate = !!data._id;
-      const payload = { ...data };
+      const isNew = location.pathname === '/editor/new';
+      const isUpdate = !!data._id && !isNew;
+
+      const { _id, ...cleanData } = data;
+      const payload = isUpdate ? data : cleanData;
 
       const url = isUpdate
         ? `${API_URL}/resumes/${data._id}`
         : `${API_URL}/resumes`;
 
       const method = isUpdate ? "PUT" : "POST";
-
-      if (isUpdate) delete payload._id;
 
       const response = await fetch(url, {
         method,
@@ -134,13 +135,19 @@ function App() {
 
       const result = await response.json();
       console.log("Resume saved:", result);
+
+      if (isNew && result._id) {
+        // update ID, and redirect
+        setData((prev) => ({ ...prev, _id: result._id }));
+        window.history.replaceState({}, '', `/editor/${result._id}`);
+      }
+
       alert("Resume saved successfully!");
     } catch (error) {
       console.error("Save error:", error);
       alert("Failed to save resume. Please try again.");
     }
   };
-
 
   return (
     <main className={theme === "dark" ? "dark bg-gray-800 min-h-screen" : "bg-gray-100 min-h-screen"}>
@@ -198,6 +205,30 @@ function App() {
                 <Route path="/resumes" element={<ResumeList />} />
                 <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
                 <Route path="/resumes/:id" element={<ResumeDetail />} />
+                <Route
+                  path="/editor/:id"
+                  element={
+                    <ResumeEditor
+                      data={data}
+                      setData={setData}
+                      pdfFormat={pdfFormat}
+                      setPdfFormat={setPdfFormat}
+                      template={selectedTemplate}
+                    />
+                  }
+                />
+                <Route
+                  path="/editor/new"
+                  element={
+                    <ResumeEditor
+                      data={data}
+                      setData={setData}
+                      pdfFormat={pdfFormat}
+                      setPdfFormat={setPdfFormat}
+                      template={selectedTemplate}
+                    />
+                  }
+                />
               </Routes>
             </main>
           </div>

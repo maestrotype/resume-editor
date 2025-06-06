@@ -24,6 +24,10 @@ function ResumeList() {
     navigate("/", { state: { resume } });
   };
 
+  const handleCreateResume = async () => {
+    navigate('/editor/new', { state: { resume: null } });
+  };  
+
   const handleDelete = async (id) => {
     if (!window.confirm(t('confirmDelete') || "Are you sure you want to delete this resume?")) return;
 
@@ -52,9 +56,14 @@ function ResumeList() {
 
   return (
     <div className="resume-list">
+      <div className="resume-add" onClick={handleCreateResume}>
+        <div className="resume-add-box">+</div>
+      </div>
+
       {resumes.map(resume => (
         <div key={resume._id} className="resume-card">
           <h2 className="resume-title">{resume.name}</h2>
+          <h2 className="resume-position">{resume.position}</h2>
           <p className="resume-summary">{resume.summary?.slice(0, 80)}...</p>
           <div className="resume-actions">
             <button onClick={() => handleView(resume)} className="btn">{t("view")}</button>

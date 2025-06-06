@@ -19,6 +19,16 @@ router.post("/", resumeUpload.single("file"), async (req, res) => {
     }
 });
 
+router.post('/', async (req, res) => {
+    try {
+      const newResume = await Resume.create({});
+      res.status(201).json(newResume);
+    } catch (error) {
+      console.error('[Resume Create Error]', error);
+      res.status(500).json({ message: 'Failed to create resume' });
+    }
+  });  
+
 router.delete("/:id", async (req, res) => {
     try {
         await resumeService.deleteResume(req.params.id);
