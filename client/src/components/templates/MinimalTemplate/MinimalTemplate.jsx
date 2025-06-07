@@ -14,7 +14,7 @@ const MinimalTemplate = forwardRef(({ data }, ref) => {
                         <div
                             className="avatar-img"
                             style={{
-                                backgroundImage: `url(${data.avatar})`,
+                                backgroundImage: `url(${data.avatarPreview || data.avatar})`,
                                 width: '120px',
                                 height: '120px',
                                 borderRadius: '50%',

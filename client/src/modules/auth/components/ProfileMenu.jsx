@@ -4,7 +4,6 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import useAuth from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
-// Используем базовый URL без /api
 const BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:4000").replace('/api', '');
 
 const ProfileMenu = () => {
@@ -37,7 +36,6 @@ const ProfileMenu = () => {
         </Menu>
     );
 
-    // Формируем URL аватара, убирая /api из пути
     const avatarUrl = user?.avatar ? `${BASE_URL}${user.avatar.replace('/api', '')}` : null;
     console.log('[ProfileMenu] Avatar URL:', avatarUrl);
 

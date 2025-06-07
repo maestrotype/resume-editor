@@ -113,7 +113,7 @@ function App() {
       const isUpdate = !!data._id && !isNew;
 
       const { _id, ...cleanData } = data;
-      const payload = isUpdate ? data : cleanData;
+      const payload = isUpdate ? data : { ...cleanData, avatar: data.avatar };
 
       const url = isUpdate
         ? `${API_URL}/resumes/${data._id}`

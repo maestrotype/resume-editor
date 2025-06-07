@@ -1,5 +1,7 @@
 import React, { forwardRef } from "react";
 import ContactBlock from "../../ContactBlock";
+import "./ClassicTemplate.css";
+import { parseExperience } from "../../../utils/parseExperience";
 
 const ClassicTemplate = forwardRef(({ data }, ref) => {
     return (
@@ -12,7 +14,7 @@ const ClassicTemplate = forwardRef(({ data }, ref) => {
             <div className="resume-header">
                 <div className="resume-header__top">
                     <div className="resume-header__avatar">
-                        {data.avatar && <img src={data.avatar} alt="Avatar" className="resume-header__avatar-img" />}
+                        {data.avatar && <img src={data.avatarPreview || data.avatar} alt="Avatar" className="resume-header__avatar-img" />}
                     </div>
                     <div className="resume-header__info">
                         <h1 className="resume-header__name">{data.name}</h1>
@@ -51,9 +53,8 @@ const ClassicTemplate = forwardRef(({ data }, ref) => {
                     </div>
                 </div>
 
-                <div className="resume-divider"></div>
-
                 <div className="resume-column resume-right">
+                    <div className="resume-divider"></div>
                     <div className="resume-section resume-experience">
                         <h3 className="section-heading">Experience</h3>
                         <div className="section-divider"></div>

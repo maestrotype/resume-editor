@@ -15,7 +15,8 @@ class ResumeService {
 
             const newResume = new Resume({
                 ...data,
-                filePath: fileData?.relativePath
+                filePath: fileData?.relativePath,
+                avatar: data.avatar || null
             });
 
             await newResume.save();
@@ -48,7 +49,8 @@ class ResumeService {
                 id,
                 { 
                     ...data,
-                    ...(fileData && { filePath: fileData.relativePath })
+                    ...(fileData && { filePath: fileData.relativePath }),
+                    avatar: data.avatar || resume.avatar
                 },
                 { new: true }
             );

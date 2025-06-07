@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { parseExperience } from "../../../utils/parseExperience";
 import "./ModernTemplate.css";
 
 const ModernTemplate = forwardRef(({ data }, ref) => {
@@ -8,7 +9,7 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                 <div className="header-left">
                     {data.avatar && (
                         <div className="avatar">
-                            <img src={data.avatar} alt="Avatar" className="avatar-img" />
+                            <img src={data.avatarPreview || data.avatarPreview || data.avatar} alt="Avatar" className="avatar-img" />
                         </div>
                     )}
                 </div>
