@@ -172,6 +172,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
         >
           <option value="a4">A4</option>
           <option value="a3">A3</option>
+          <option value="a2">A2</option>
+          <option value="a1">A1</option>
           <option value="letter">Letter</option>
         </select>
       </div>

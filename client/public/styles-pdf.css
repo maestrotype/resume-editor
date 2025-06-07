@@ -356,3 +356,9 @@ h3 {
   }
 }
 
+@media print {
+  .page-break {
+    page-break-before: always;
+  }
+}
+
