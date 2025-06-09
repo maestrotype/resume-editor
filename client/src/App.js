@@ -17,6 +17,7 @@ import 'antd/dist/reset.css';
 import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import ResizableLayout from "./components/ResizableLayout/ResizableLayout.jsx"
 
 function App() {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -160,82 +161,78 @@ function App() {
           handleSave={handleSave}
         />
         <div className="app p-4">
-          <div className="wrapper-editor">
-            <main className="p-4">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      {isMobile ? (
-                        <Swiper
-                          modules={[Navigation, Pagination]}
-                          spaceBetween={50}
-                          slidesPerView={1}
-                          autoHeight={true}
-                          navigation
-                          pagination={{ clickable: true }}
-                        >
-                          <SwiperSlide>
-                            <ResumeEditor
-                              data={data}
-                              setData={setData}
-                              pdfFormat={pdfFormat}
-                              setPdfFormat={setPdfFormat}
-                              template={selectedTemplate}
-                            />
-                          </SwiperSlide>
-                          <SwiperSlide>
-                            <ResumePreview ref={previewRef} data={data} />
-                          </SwiperSlide>
-                        </Swiper>
-                      ) : (
-                        <ResumeEditor
-                          data={data}
-                          setData={setData}
-                          pdfFormat={pdfFormat}
-                          setPdfFormat={setPdfFormat}
-                          template={selectedTemplate}
-                        />
-                      )}
-                    </>
-                  }
+          {isMobile ? (
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={50}
+              slidesPerView={1}
+              autoHeight={true}
+              navigation
+              pagination={{ clickable: true }}
+            >
+              <SwiperSlide>
+                <ResumeEditor
+                  data={data}
+                  setData={setData}
+                  pdfFormat={pdfFormat}
+                  setPdfFormat={setPdfFormat}
+                  template={selectedTemplate}
                 />
-                {AuthRoutes()}
-                <Route path="/resumes" element={<ResumeList />} />
-                <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
-                <Route path="/resumes/:id" element={<ResumeDetail />} />
-                <Route
-                  path="/editor/:id"
-                  element={
-                    <ResumeEditor
-                      data={data}
-                      setData={setData}
-                      pdfFormat={pdfFormat}
-                      setPdfFormat={setPdfFormat}
-                      template={selectedTemplate}
-                    />
-                  }
-                />
-                <Route
-                  path="/editor/new"
-                  element={
-                    <ResumeEditor
-                      data={data}
-                      setData={setData}
-                      pdfFormat={pdfFormat}
-                      setPdfFormat={setPdfFormat}
-                      template={selectedTemplate}
-                    />
-                  }
-                />
-              </Routes>
-            </main>
-          </div>
-          {!isMobile && (
-            <div className="wrapper-preview">
-              <ResumePreview ref={previewRef} data={data} template={selectedTemplate} />
-            </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <ResumePreview ref={previewRef} data={data} />
+              </SwiperSlide>
+            </Swiper>
+          ) : (
+            <ResizableLayout
+              left={
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <ResumeEditor
+                        data={data}
+                        setData={setData}
+                        pdfFormat={pdfFormat}
+                        setPdfFormat={setPdfFormat}
+                        template={selectedTemplate}
+                      />
+                    }
+                  />
+                  {AuthRoutes()}
+                  <Route path="/resumes" element={<ResumeList />} />
+                  <Route path="/templates" element={<Templates onTemplateSelect={handleTemplateSelect} />} />
+                  <Route path="/resumes/:id" element={<ResumeDetail />} />
+                  <Route
+                    path="/editor/:id"
+                    element={
+                      <ResumeEditor
+                        data={data}
+                        setData={setData}
+                        pdfFormat={pdfFormat}
+                        setPdfFormat={setPdfFormat}
+                        template={selectedTemplate}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/editor/new"
+                    element={
+                      <ResumeEditor
+                        data={data}
+                        setData={setData}
+                        pdfFormat={pdfFormat}
+                        setPdfFormat={setPdfFormat}
+                        template={selectedTemplate}
+                      />
+                    }
+                  />
+                </Routes>
+              }
+              right={
+                <ResumePreview ref={previewRef} data={data} template={selectedTemplate} />
+              }
+            />
           )}
         </div>
       </AuthProvider>
