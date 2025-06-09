@@ -1,14 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import fileService from "../modules/files/services/fileService";
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
   const { t } = useTranslation();
+  const activeFieldRef = useRef(null);
   const [fileKey, setFileKey] = useState(Date.now());
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+
+  const autoResize = (el) => {
+    if (!el) return;
+
+    if (activeFieldRef.current && activeFieldRef.current !== el) {
+      activeFieldRef.current.style.height = "80px";
+    }
+
+    activeFieldRef.current = el;
+
+    el.style.transition = "height 0.2s ease";
+    el.style.height = "auto";
+
+    requestAnimationFrame(() => {
+      const scrollHeight = el.scrollHeight;
+      el.style.height = scrollHeight + "px";
+    });
+  };
+
+
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -16,24 +37,37 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
       try {
         // First convert to base64 for preview
         const base64 = await fileService.fileToBase64(file);
-        
+
         // Upload to server
         const response = await fileService.uploadAvatar(file);
         if (response.success) {
           // Use server path for storage, but base64 for immediate preview
-          setData(prev => ({ 
-            ...prev, 
+          setData(prev => ({
+            ...prev,
             avatar: response.avatarPath,
             avatarPreview: base64 // Use for immediate preview
           }));
         }
-        
+
         setFileKey(Date.now()); // Reset file input after successful upload
       } catch (error) {
         console.error('File handling error:', error);
       }
     }
   };
+
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      textarea {
+        transition: height 0.2s ease;
+        overflow-y: hidden;
+        resize: none;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("resume-data");
@@ -85,11 +119,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           name="summary"
           placeholder={t("summary")}
           value={data.summary || ""}
-          onChange={(e) => {
-            handleChange(e);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-          }}
+          onClick={(e) => autoResize(e.target)}
+          onChange={handleChange}
           rows="3"
         />
       </div>
@@ -100,11 +131,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           name="skills"
           placeholder={t("skills")}
           value={data.skills || ""}
-          onChange={(e) => {
-            handleChange(e);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-          }}
+          onClick={(e) => autoResize(e.target)}
+          onChange={handleChange}
           rows="3"
         />
       </div>
@@ -115,11 +143,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           name="experience"
           placeholder={t("experience")}
           value={data.experience || ""}
-          onChange={(e) => {
-            handleChange(e);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-          }}
+          onClick={(e) => autoResize(e.target)}
+          onChange={handleChange}
           rows="3"
         />
       </div>
@@ -130,11 +155,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           name="education"
           placeholder={t("education")}
           value={data.education || ""}
-          onChange={(e) => {
-            handleChange(e);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-          }}
+          onClick={(e) => autoResize(e.target)}
+          onChange={handleChange}
           rows="3"
         />
       </div>
@@ -145,11 +167,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           name="contacts"
           placeholder={t("contacts")}
           value={data.contacts || ""}
-          onChange={(e) => {
-            handleChange(e);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-          }}
+          onClick={(e) => autoResize(e.target)}
+          onChange={handleChange}
           rows="3"
         />
       </div>
@@ -166,8 +185,8 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
 
       <div className="form-section">
         <label>{t("pdfFormat")}</label>
-        <select 
-          value={pdfFormat || "a4"} 
+        <select
+          value={pdfFormat || "a4"}
           onChange={(e) => setPdfFormat(e.target.value)}
         >
           <option value="a4">A4</option>
