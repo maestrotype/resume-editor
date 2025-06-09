@@ -1,5 +1,3 @@
-// utils/parseExperience.js
-
 export function parseExperience(raw = '') {
     const lines = raw
       .trim()
@@ -7,34 +5,36 @@ export function parseExperience(raw = '') {
       .map(line => line.trim())
       .filter(line => line.length > 0);
   
-    const grouped = [];
-    let current = [];
+    const isHeader = /^[A-Z][^\n]+\([^)]+\)$/.test.bind(/^[A-Z][^\n]+\([^)]+\)$/);
   
-    lines.forEach(line => {
-      const isNewEntry = /[A-Z].+\([^)]+\)/.test(line) || /\s-\s/.test(line);
-  
-      if (isNewEntry) {
-        if (current.length) grouped.push(current);
-        current = [line];
+    const blocks = lines.reduce((acc, line) => {
+      if (isHeader(line)) {
+        if (acc.length === 0) {
+          acc.push([line]);
+        } else {
+          acc.push([line]);
+        }
       } else {
-        current.push(line);
+        if (acc.length === 0) {
+          acc.push([line]);
+        } else {
+          acc[acc.length - 1].push(line);
+        }
       }
-    });
+      return acc;
+    }, []);
   
-    if (current.length) grouped.push(current);
+    return blocks.map((lines) => {
+      const filtered = lines.filter(l => l !== '');
+      if (filtered.length < 4) return null;
   
-    return grouped
-      .map((lines) => {
-        const filtered = lines.filter(l => l !== '');
-        if (filtered.length < 2) return null;
-        const [company, period, location, ...desc] = filtered;
-        return {
-          company,
-          period,
-          location,
-          description: desc.join(' ').replace(/\s+/g, ' ').trim(),
-        };
-      })
-      .filter(Boolean);
+      const [company, period, location, ...desc] = filtered;
+      return {
+        company,
+        period,
+        location,
+        desc
+      };
+    }).filter(Boolean);
   }
   
