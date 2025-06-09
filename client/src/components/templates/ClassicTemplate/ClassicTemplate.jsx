@@ -41,7 +41,7 @@ const ClassicTemplate = forwardRef(({ data }, ref) => {
                         <div className="skills-list">
                             {data.skills
                                 .split("\n")
-                                .filter((line) => line.trim() !== "") // убираем пустые строки
+                                .filter((line) => line.trim() !== "")
                                 .map((line, idx) =>
                                     line.includes(":") ? (
                                         <div key={idx} className="skill-heading">{line.trim()}</div>
@@ -55,14 +55,21 @@ const ClassicTemplate = forwardRef(({ data }, ref) => {
 
                 <div className="resume-column resume-right">
                     <div className="resume-divider"></div>
-                    <div className="resume-section resume-experience">
+                    <section className="resume-section resume-experience">
                         <h3 className="section-heading">Experience</h3>
-                        <div className="section-divider"></div>
-                        <div
-                            className="experience-content"
-                            dangerouslySetInnerHTML={{ __html: data.experience }}
-                        />
-                    </div>
+                        <div className="resume-experience">
+                            {parseExperience(data.experience).map(({ company, period, location, desc }, idx) => (
+                                <div key={idx} style={{ marginBottom: '1.5em' }}>
+                                    <strong>{company}</strong><br />
+                                    <em>{period}</em><br />
+                                    <span>({location})</span>
+                                    <p style={{ marginTop: '0.5em' }}>
+                                        {desc.join(' ').replace(/\s+/g, ' ').trim()}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             </div>
 

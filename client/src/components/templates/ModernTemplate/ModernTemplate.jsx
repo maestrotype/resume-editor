@@ -1,8 +1,10 @@
 import React, { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 import { parseExperience } from "../../../utils/parseExperience";
 import "./ModernTemplate.css";
 
 const ModernTemplate = forwardRef(({ data }, ref) => {
+    const { t } = useTranslation();
     return (
         <div className="template-modern" ref={ref} id="resume-preview">
             <div className="modern-header">
@@ -33,12 +35,23 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                         <p className="summary-text">{data.summary}</p>
                     </section>
                     <section className="experience">
-                        <h2>Experience</h2>
-                        <div className="content-text">{data.experience}</div>
+                        <h2>{t("experience")}</h2>
+                        <div className="resume-experience">
+                            {parseExperience(data.experience).map(({ company, period, location, desc }, idx) => (
+                                <div key={idx} style={{ marginBottom: '1.5em' }}>
+                                    <strong>{company}</strong><br />
+                                    <em>{period}</em><br />
+                                    <span>({location})</span>
+                                    <p style={{ marginTop: '0.5em' }}>
+                                        {desc.join(' ').replace(/\s+/g, ' ').trim()}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </section>
 
                     <section className="education">
-                        
+
                     </section>
                 </main>
 
