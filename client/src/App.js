@@ -65,14 +65,23 @@ function App() {
     setSelectedTemplate(id);
   };
 
+  const templateStyles = {
+    1: "/templates/ClassicTemplate.css",
+    2: "/templates/ModernTemplate.css",
+    3: "/templates/MinimalTemplate.css",
+  };
+
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;
+
+    const templateStyle = templateStyles[Number(selectedTemplate)] || templateStyles[3];
 
     const win = window.open("", "_blank");
     const html = `
       <html>
         <head>
-          <link rel="stylesheet" href="/styles-pdf.css" />
+          <link rel="stylesheet" href="${templateStyle}" />
+          <link rel="stylesheet" href="/styles.css" />
         </head>
         <body>
           ${previewRef.current.outerHTML}
@@ -89,12 +98,31 @@ function App() {
       return;
     }
 
+    const templateStyle = templateStyles[selectedTemplate] || templateStyles[1];
+
     const element = previewRef.current.cloneNode(true);
+    const container = document.createElement("div");
+
+    container.style.position = "absolute";
+    container.style.top = "-9999px";
+    container.style.left = "-9999px";
+    container.style.width = "794px";
+    container.appendChild(element);
+    document.body.appendChild(container);
 
     const styleLink = document.createElement("link");
+    const styleLinkMain = document.createElement("link");
     styleLink.rel = "stylesheet";
-    styleLink.href = "/styles-pdf.css";
+    // styleLink.href = "/styles-pdf.css";
+    styleLink.href = templateStyle;
+    styleLinkMain.href = "/styles.css";
+    // element.insertBefore(styleLink, element.firstChild);
     element.insertBefore(styleLink, element.firstChild);
+    element.insertBefore(styleLinkMain, element.firstChild);
+
+
+    const width = element.scrollWidth;
+    const height = element.scrollHeight;
 
     html2pdf()
       .from(element)
@@ -103,9 +131,12 @@ function App() {
         filename: "My_Resume.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: pdfFormat, orientation: "portrait" },
+        jsPDF: { unit: "pt", format: [width, height], orientation: "portrait" },
       })
-      .save();
+      .save()
+      .then(() => {
+        document.body.removeChild(container);
+      });
   };
 
   const handleSave = async () => {
