@@ -1,6 +1,8 @@
 .template-modern {
     padding: 12px;
+    color: var(--color-text);
 }
+
 .modern-header {
     display: flex;
     justify-content: space-between;
@@ -10,6 +12,14 @@
 }
 .header-right {
     flex: 2;
+}
+.personal-info {
+    padding-left: 10px;
+    text-align: right;
+}
+
+.personal-info h3 {
+    text-align: right;
 }
 .modern-header .avatar-img {
     width: 100%;

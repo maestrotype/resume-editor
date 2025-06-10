@@ -18,8 +18,8 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                 <div className="header-right">
                     <div className="personal-info">
                         <h1 className="name">{data.name}</h1>
-                        <h3 className="position">{data.position}</h3>
-                        <h2>Education</h2>
+                        <h2 className="position">{data.position}</h2>
+                        <h3>Education</h3>
                         <div className="content-text">{data.education}</div>
                         <div className="contact-info">
                             <p>{data.contacts}</p>
@@ -35,10 +35,10 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                         <p className="summary-text">{data.summary}</p>
                     </section>
                     <section className="experience">
-                        <h2>{t("experience")}</h2>
+                        <h3>{t("experience")}</h3>
                         <div className="resume-experience">
                             {parseExperience(data.experience).map(({ company, period, location, desc }, idx) => (
-                                <div key={idx} style={{ marginBottom: '1.5em' }}>
+                                <div key={idx} className="company-experience">
                                     <strong>{company}</strong><br />
                                     <em>{period}</em><br />
                                     <span>({location})</span>
