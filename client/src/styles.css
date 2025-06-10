@@ -108,7 +108,7 @@ h3 {
   color: var(--color-placeholder);
   border: 1px solid var(--color-border);
   margin-bottom: 16px;
-  transition: height 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .editor input:focus,
@@ -119,11 +119,9 @@ h3 {
 }
 
 .editor textarea {
-  /* resize: vertical; */
+  resize: vertical;
   min-height: 80px;
   line-height: 1.5;
-  overflow-y: hidden;
-  resize: none;
 }
 
 .editor .section-title {
