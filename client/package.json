@@ -18,8 +18,9 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "node copyStyles.js && react-scripts start",
+    "build": "node copyStyles.js && react-scripts build",
+    "copy-styles": "node copyStyles.js"
   },
   "browserslist": {
     "production": [

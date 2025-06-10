@@ -66,6 +66,12 @@ function App() {
   };
 
   const templateStyles = {
+    1: "/components/templates/ClassicTemplate/ClassicTemplate.css",
+    2: "/components/templates/ModernTemplate/ModernTemplate.css",
+    3: "/components/templates/MinimalTemplate/MinimalTemplate.css",
+  };
+
+  const localTemplateStyles = {
     1: "/templates/ClassicTemplate.css",
     2: "/templates/ModernTemplate.css",
     3: "/templates/MinimalTemplate.css",
@@ -74,14 +80,17 @@ function App() {
   const handlePreviewPDF = () => {
     if (!previewRef.current) return;
 
-    const templateStyle = templateStyles[Number(selectedTemplate)] || templateStyles[3];
+    const templateStylePath = localTemplateStyles[Number(selectedTemplate)] || localTemplateStyles[1];
 
     const win = window.open("", "_blank");
+    if (!win) return;
+
     const html = `
+      <!DOCTYPE html>
       <html>
         <head>
-          <link rel="stylesheet" href="${templateStyle}" />
-          <link rel="stylesheet" href="/styles.css" />
+          <link rel="stylesheet" href="styles-pdf.css">
+          <link rel="stylesheet" href="${templateStylePath}">
         </head>
         <body>
           ${previewRef.current.outerHTML}
@@ -90,6 +99,10 @@ function App() {
     `;
     win.document.write(html);
     win.document.close();
+
+    setTimeout(() => {
+      win.document.body.style.opacity = "1";
+    }, 100);
   };
 
   const handleExportPDF = () => {

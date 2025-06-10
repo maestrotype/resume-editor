@@ -1,0 +1,128 @@
+.template-minimal {
+    font-family: "Arial", sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.template-minimal .skills-list .skill-item, 
+.template-minimal .skills-list .skill-heading {
+    color: #f2f2f2;;
+}
+
+.resume {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    background-color: #464b54;
+    color: #fff;
+    padding: 20px 0 20px 20px;
+    width: 360px;
+}
+
+.sidebar h2 {
+    margin-top: 20px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #f2f2f2;
+    color: #f2f2f2;
+}
+
+.sidebar .avatar {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.avatar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.template-minimal .resume-summary {
+    padding: 0;
+}
+
+.template-minimal .contact-block {
+    flex-direction: column;
+    margin: 10px;
+}
+
+.template-minimal .contact-block .contact-line span{
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 8px 0;
+}
+
+.sidebar p {
+    margin: 4px 0;
+}
+
+.template-minimal .content {
+    padding: 12px;
+    width: 100%;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.experience, .education, .recommendations {
+    margin: 20px 0;
+}
+
+.experience h2, .recommendations h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #444;
+}
+
+.experience article, .education article {
+    margin: 10px 0;
+}
+
+.experience h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #222;
+}
+
+.experience p {
+    margin: 5px 0;
+    color: #666;
+}
+
+ul {
+    margin: 5px 0;
+}
+
+li {
+    margin: 3px 0;
+}
+
+.footer {
+    font-size: 0.9em;
+    color: #555;
+}
