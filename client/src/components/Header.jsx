@@ -6,7 +6,7 @@ import ProfileMenu from "../modules/auth/components/ProfileMenu";
 import "../styles/header.css";
 import SVGIcon from "./SVGIcon";
 
-function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, handleSave }) {
+function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, handleExportToPptx, handleSave }) {
   const { t, i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,7 +18,7 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
     } else {
       i18n.changeLanguage("en");
     }
-  };  
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -80,6 +80,13 @@ function Header({ toggleTheme, currentTheme, handlePreviewPDF, handleExportPDF, 
           className="action-button"
           title={t("exportPDF")}
         >
+          <SVGIcon name="export" />
+        </button>
+
+        <button
+          onClick={handleExportToPptx}
+          className="action-button"
+          title={t("exportPptx")}>
           <SVGIcon name="export" />
         </button>
 

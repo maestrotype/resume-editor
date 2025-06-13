@@ -1,7 +1,6 @@
 // src/App.js
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import html2pdf from "html2pdf.js";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import { AuthProvider } from "./modules/auth/context/AuthContext";
@@ -11,13 +10,16 @@ import ResumePreview from "./components/ResumePreview";
 import ResumeList from "./components/ResumeList";
 import Templates from "./components/Templates";
 import ResumeDetail from "./components/ResumeDetail";
+import handleExportToPptx from "./utils/export/handleExportToPptx";
+import handlePreviewPDF from "./utils/export/handlePreviewPDF";
+import handleExportPDF from "./utils/export/handleExportPDF";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
 import 'antd/dist/reset.css';
 import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import ResizableLayout from "./components/ResizableLayout/ResizableLayout.jsx"
+import ResizableLayout from "./components/ResizableLayout/ResizableLayout.jsx";
 
 function App() {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -26,6 +28,7 @@ function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedTemplate, setSelectedTemplate] = useState(1);
+  const [pdfFormat, setPdfFormat] = useState("a4");
   const [data, setData] = useState({
     name: "",
     title: "",
@@ -43,7 +46,6 @@ function App() {
   }, [location.state]);
 
   const previewRef = useRef();
-  const [pdfFormat, setPdfFormat] = useState("a4");
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -63,93 +65,6 @@ function App() {
 
   const handleTemplateSelect = (id) => {
     setSelectedTemplate(id);
-  };
-
-  const templateStyles = {
-    1: "/components/templates/ClassicTemplate/ClassicTemplate.css",
-    2: "/components/templates/ModernTemplate/ModernTemplate.css",
-    3: "/components/templates/MinimalTemplate/MinimalTemplate.css",
-  };
-
-  const localTemplateStyles = {
-    1: "/templates/ClassicTemplate.css",
-    2: "/templates/ModernTemplate.css",
-    3: "/templates/MinimalTemplate.css",
-  };
-
-  const handlePreviewPDF = () => {
-    if (!previewRef.current) return;
-
-    const templateStylePath = localTemplateStyles[Number(selectedTemplate)] || localTemplateStyles[1];
-
-    const win = window.open("", "_blank");
-    if (!win) return;
-
-    const html = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <link rel="stylesheet" href="styles-pdf.css">
-          <link rel="stylesheet" href="${templateStylePath}">
-        </head>
-        <body>
-          ${previewRef.current.outerHTML}
-        </body>
-      </html>
-    `;
-    win.document.write(html);
-    win.document.close();
-
-    setTimeout(() => {
-      win.document.body.style.opacity = "1";
-    }, 100);
-  };
-
-  const handleExportPDF = () => {
-    if (!previewRef.current) {
-      console.error("Preview element not found");
-      return;
-    }
-
-    const templateStyle = templateStyles[selectedTemplate] || templateStyles[1];
-
-    const element = previewRef.current.cloneNode(true);
-    const container = document.createElement("div");
-
-    container.style.position = "absolute";
-    container.style.top = "-9999px";
-    container.style.left = "-9999px";
-    container.style.width = "794px";
-    container.appendChild(element);
-    document.body.appendChild(container);
-
-    const styleLink = document.createElement("link");
-    const styleLinkMain = document.createElement("link");
-    styleLink.rel = "stylesheet";
-    // styleLink.href = "/styles-pdf.css";
-    styleLink.href = templateStyle;
-    styleLinkMain.href = "/styles.css";
-    // element.insertBefore(styleLink, element.firstChild);
-    element.insertBefore(styleLink, element.firstChild);
-    element.insertBefore(styleLinkMain, element.firstChild);
-
-
-    const width = element.scrollWidth;
-    const height = element.scrollHeight;
-
-    html2pdf()
-      .from(element)
-      .set({
-        margin: 10,
-        filename: "My_Resume.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "pt", format: [width, height], orientation: "portrait" },
-      })
-      .save()
-      .then(() => {
-        document.body.removeChild(container);
-      });
   };
 
   const handleSave = async () => {
@@ -200,8 +115,9 @@ function App() {
         <Header
           toggleTheme={toggleTheme}
           currentTheme={theme}
-          handlePreviewPDF={handlePreviewPDF}
-          handleExportPDF={handleExportPDF}
+          handlePreviewPDF={() => handlePreviewPDF(previewRef, selectedTemplate)}
+          handleExportPDF={() => handleExportPDF(previewRef, selectedTemplate)}
+          handleExportToPptx={() => handleExportToPptx(data)}
           handleSave={handleSave}
         />
         <div className="app p-4">
