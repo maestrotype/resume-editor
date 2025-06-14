@@ -103,9 +103,28 @@ PORT=4000
 - [ ] Vue/Svelte versions
 - [ ] Export to DOCX, JSON Resume, etc.
 
+## 🤖 AI Assistant (NEW!)
+
+- ✍️ Grammar & style correction for resume text
+- 💡 Smart generation of summary based on skills and experience
+- Uses: OpenAI GPT-3.5 via Python Flask API
+
+### Local Flask API Setup
+1. `cd ai-assistant-flask`
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+GEMINI_API_KEY=AIzaSyBXEFlWrTKel24GeLok-107EeAmOTkOLNc
+
+2. Add `.env` with `OPENAI_API_KEY`
+3. Run: `python app.py`
+
+
+
 ## 👤 Author
 
-Made by **Andrii** 🇺🇦 — [github.com/your-username](https://github.com/your-username)
+Made by **Andrii Danichkin** 🇺🇦 — [github.com/maestrotype](https://github.com/maestrotype)
 
 ## 📄 License
 
