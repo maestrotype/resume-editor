@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAiSuggestion } from "../hooks/useAiSuggestion";
 import fileService from "../modules/files/services/fileService";
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
@@ -29,7 +30,16 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
     });
   };
 
+  const { fetchSuggestion, loading } = useAiSuggestion();
 
+  const handleImprove = async () => {
+    const improved = await fetchSuggestion(data.summary);
+    if (improved) {
+      setData((prev) => ({ ...prev, summary: improved }));
+    } else {
+      alert("Error AI-helper");
+    }
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -114,7 +124,16 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
       </div>
 
       <div className="form-group">
-        <label>{t("summary")}</label>
+        <label>{t("summary")}
+          <button
+            onClick={handleImprove}
+            title={t("ai-help")}
+            className="ai-button"
+            disabled={loading}
+          >
+            {loading ? "..." : "✨"}
+          </button>
+        </label>
         <textarea
           name="summary"
           placeholder={t("summary")}
@@ -122,9 +141,10 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           onClick={(e) => autoResize(e.target)}
           onChange={handleChange}
           rows="3"
+          style={{ flex: 1 }}
         />
-      </div>
 
+      </div>
       <div className="form-group">
         <label>{t("skills")}</label>
         <textarea

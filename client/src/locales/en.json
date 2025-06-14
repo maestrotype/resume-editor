@@ -25,6 +25,7 @@
   "resumeSaveError": "Error saving resume. Please try again.",
   "resumeDeleteSuccess": "Resume deleted successfully!",
   "resumeDeleteError": "Error deleting resume. Please try again.",
+  "ai-help": "AI Help",
 
   "username": "Username",
   "password": "Password",
