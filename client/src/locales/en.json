@@ -25,7 +25,14 @@
   "resumeSaveError": "Error saving resume. Please try again.",
   "resumeDeleteSuccess": "Resume deleted successfully!",
   "resumeDeleteError": "Error deleting resume. Please try again.",
-
+  "ai": {
+    "autogen_section": "AI-autogeneration",
+    "autogen_hint": "Based on title, position, and skills, generate summary, experience, and position",
+    "autogen_button": "Autogenerate resume",
+    "loading": "Loading...",
+    "autogen_fill_error": "Please fill in title, position and skills",
+    "ai-help": "Improve summary"
+  },
   "username": "Username",
   "password": "Password",
   "login": "Login",

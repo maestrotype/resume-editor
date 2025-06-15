@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAiSuggestion } from "../hooks/useAiSuggestion";
+import { useAIAutogen } from "../hooks/useAIAutogen";
 import fileService from "../modules/files/services/fileService";
 
 function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
   const { t } = useTranslation();
   const activeFieldRef = useRef(null);
   const [fileKey, setFileKey] = useState(Date.now());
+  const { fetchSuggestion, loading } = useAiSuggestion();
+  const [fetchAutogen, loadingAuto] = useAIAutogen();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -29,7 +33,32 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
     });
   };
 
+  // const handleImprove = async () => {
+  //   const improved = await fetchSuggestion(data.summary);
+  //   if (improved) {
+  //     setData((prev) => ({ ...prev, summary: improved }));
+  //   } else {
+  //     alert("Error AI-helper");
+  //   }
+  // };
 
+  const handleAutogen = async () => {
+    try {
+      const result = await fetchAutogen({
+        title: data.title,
+        position: data.position,
+        skills: data.skills,
+      });
+      if (result) {
+        setData((prev) => ({
+          ...prev,
+          summary: result.summary
+        }));
+      }
+    } catch (error) {
+      console.error("Autogen error", error);
+    }
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -112,9 +141,18 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           onChange={handleChange}
         />
       </div>
-
       <div className="form-group">
-        <label>{t("summary")}</label>
+        <div className="wrap-label">
+          <label for="summary">{t("summary")}</label>
+          <button
+            onClick={handleAutogen}
+            title={t("ai.autogen_section")}
+            className="ai-button"
+            disabled={loading}
+          >
+            {loading ? "..." : "\u2728"}
+          </button>
+        </div>
         <textarea
           name="summary"
           placeholder={t("summary")}
@@ -122,9 +160,9 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
           onClick={(e) => autoResize(e.target)}
           onChange={handleChange}
           rows="3"
+          style={{ flex: 1 }}
         />
       </div>
-
       <div className="form-group">
         <label>{t("skills")}</label>
         <textarea
