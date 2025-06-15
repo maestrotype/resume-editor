@@ -184,6 +184,20 @@ h3 {
   background-color: #fff;
 }
 
+.wrap-label {
+  display: flex;
+  align-items: baseline;
+}
+
+textarea.highlight {
+  animation: highlightFade 2s ease;
+}
+
+@keyframes highlightFade {
+  0% { background-color: #ffffcc; }
+  100% { background-color: transparent; }
+}
+
 .file-label {
   display: inline-flex;
   align-items: center;
