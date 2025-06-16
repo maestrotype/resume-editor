@@ -29,7 +29,9 @@ function ResumeEditor({ data, setData, pdfFormat, setPdfFormat, template }) {
 
     requestAnimationFrame(() => {
       const scrollHeight = el.scrollHeight;
+      const scrollTop = el.scrollTop;
       el.style.height = scrollHeight + "px";
+      el.scrollTop = scrollTop;
     });
   };
 

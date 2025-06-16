@@ -68,7 +68,7 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                         </ul>
                     </div>
 
-                    <div className="sidebar-section interests">
+                    {/* <div className="sidebar-section interests">
                         <h3>Interests</h3>
                         <p>{data.interests}</p>
                     </div>
@@ -76,7 +76,7 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
                     <div className="sidebar-section languages">
                         <h3>Languages</h3>
                         <p>{data.languages}</p>
-                    </div>
+                    </div> */}
                 </aside>
             </div>
         </div>
