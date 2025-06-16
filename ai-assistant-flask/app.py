@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from gemini_helper import improve_text, generate_summary
+from gemini_helper import generate_summary
 from flask_cors import CORS
 
 app = Flask(__name__)
